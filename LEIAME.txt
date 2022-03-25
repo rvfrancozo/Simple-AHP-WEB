@@ -1,0 +1,11 @@
+composer create-project laravel/laravel example-app
+
+composer require laravel/ui
+php artisan ui bootstrap --auth
+npm install && npm run dev
+
+Se der erro no comando acima tente
+npm cache clean --force
+
+php artisan migrate
+php artisan serve
