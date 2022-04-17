@@ -19,7 +19,7 @@ Route::get('/', function () {
 });
 
 Route::get('/auth/github/redirect', [AuthController::class, 'githubredirect']);
-Route::get('/auth/github/callback', [AuthController::class, 'githubcalllback']);
+Route::get('/auth/github/callback', [AuthController::class, 'githubcallback']);
 
 
 Auth::routes();

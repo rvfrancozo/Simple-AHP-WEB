@@ -74,7 +74,7 @@
 <a class="btn btn-block btn-social btn-twitter">
     <span class="fa fa-twitter"></span> Sign in with Twitter
 </a><br>
-<a class="btn btn-block btn-social btn-github">
+<a href="auth/github/redirect" class="btn btn-block btn-social btn-github">
     <span class="fa fa-github"></span> Sign in with Github
 </a><br>
 <a class="btn btn-block btn-social btn-google">

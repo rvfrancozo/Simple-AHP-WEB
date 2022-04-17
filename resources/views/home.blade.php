@@ -14,10 +14,11 @@
                         </div>
                     @endif
 
-                    {{ __('You are logged in!') }}
+                    {{ __('You are logged in!') $user->email }}
                 </div>
             </div>
         </div>
     </div>
 </div>
 @endsection
+{{ $user->email }} 
