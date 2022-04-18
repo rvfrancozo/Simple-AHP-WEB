@@ -23,6 +23,7 @@ class AuthController extends Controller
 
         $user = User::where('email', $userdata->email)->where('auth_type', 'github')->first();
         if ($user) {
+            $user->avatar = $userdata->avatar;
             Auth::login($user);
             //dd($userdata);
             return redirect('/');

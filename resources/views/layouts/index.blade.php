@@ -2,7 +2,6 @@
 <html lang="{{ str_replace('_', '-', app()->getLocale()) }}">
 
 <head>
-    <title>AHP</title>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -20,41 +19,10 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
-    
     <link href="{{ asset('css/bootstrap-social.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/social.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/social.css') }}" rel="stylesheet" type="text/css">
+
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
-    
-    <style>
-        .chart-wrapper {
-
-            height: 300px;
-            width: 600px;
-        }
-
-        p {
-            margin-top: 15px;
-        }
-    </style>
-
-    <!-- <style>
-    .chart-wrapper2 {
-      
-      height: 30px;
-      width: 60px;
-    }
-
-    p {
-      margin-top: 15px;
-    }
-  </style> -->
-
-    <link rel="stylesheet" href="/css/bootstrap.min.css">
-    <script src="/js/jquery.min.js"></script>
-    <script src="/js/bootstrap.bundle.min.js"></script>
-    <script src="/js/chart.js"></script>
 </head>
 
 <body>
@@ -86,9 +54,12 @@
                         @else
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
-                                <img width="25" height="25" src="{{ asset('images/tuxneo.jpg') }}" />
+                            @if(Auth::user()->avatar == "none")
+                            <img  width="25" height="25"  src="{{ asset('images/ahp.jpg') }}">
+                            @else
+                             <img width="25" height="25" src="{{ Auth::user()->avatar }}" > 
+                             @endif
                             </a>
-
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">
                                 <a class="dropdown-item" href="/nodes">
                                     My Decision Problems
