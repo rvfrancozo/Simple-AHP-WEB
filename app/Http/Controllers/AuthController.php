@@ -21,30 +21,26 @@ class AuthController extends Controller
     {
         $userdata = Socialite::driver('github')->user();
 
-        $user = User::where('email',$userdata->email)->where('auth_type','github')->first();
-        if($user) {
-            echo "Name: ".$userdata->name."<br>";
-            echo "Name: ".$userdata->email."<br>";
-            dd($userdata);
+        $user = User::where('email', $userdata->email)->where('auth_type', 'github')->first();
+        if ($user) {
+            Auth::login($user);
+            //dd($userdata);
+            return redirect('/');
+
         } else {
+
             $uuid = Str::uuid()->toString();
-       
-        $user = new User();
 
-        $user->name = $userdata->name;
-        $user->email = $userdata->email;
-        $user->password = Hash::make($uuid.now());
-        $user->auth_type = 'github';
-        $user->save();
-        Auth::login($user);
-
-        echo "Name: ".$userdata->name."<br>";
-        echo "E-mail: ".$userdata->email."<br>";
-
+            $user = new User();
+            $user->name = $userdata->name;
+            $user->email = $userdata->email;
+            $user->password = Hash::make($uuid . now());
+            $user->auth_type = 'github';
+            $user->avatar = $userdata->avatar;
+            $user->save();
+            Auth::login($user);
+            //dd($userdata);
+            return redirect('/');
         }
-        
     }
-
 }
-
-

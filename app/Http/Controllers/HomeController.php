@@ -1,8 +1,10 @@
 <?php
 
 namespace App\Http\Controllers;
+use App\Models\Node;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
@@ -23,6 +25,8 @@ class HomeController extends Controller
      */
     public function index()
     {
-        return view('home');
+        $objectives = Node::get()->where('level', 0)->where('user_id',Auth::user()->id);
+        return view('objetivos.nodes')->with('objectives', $objectives);
+        //return view("objetivos.nodes")
     }
 }

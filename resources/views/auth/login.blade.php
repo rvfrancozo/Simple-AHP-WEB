@@ -1,6 +1,31 @@
-@extends('layouts.app')
+@extends('layouts.index')
 
-@section('content')
+@section('menu')
+
+<ul class="navbar-nav mr-auto">
+
+	@guest
+	@if (Route::has('login'))
+	@endif
+
+	@if (Route::has('register'))
+	@endif
+	@else
+
+	<li class="nav-item">
+		<a class="nav-link" href="#">My Decision Problems</a>
+	</li>
+
+	<li class="nav-item">
+		<a class="nav-link" href="#">New Decision Problem</a>
+	</li>
+
+	@endguest
+
+</ul>
+@stop
+
+@section('conteudo')
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="container">
     <div class="row justify-content-center">
