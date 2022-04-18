@@ -55,9 +55,9 @@
                         <li class="nav-item dropdown">
                             <a id="navbarDropdown" class="nav-link dropdown-toggle" href="#" role="button" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="false" v-pre>
                             @if(Auth::user()->avatar == "none")
-                            <img  width="25" height="25"  src="{{ asset('images/ahp.jpg') }}">
+                            <img class="rounded-circle" width="35" height="35"  src="{{ asset('images/ahp.jpg') }}">
                             @else
-                             <img width="25" height="25" src="{{ Auth::user()->avatar }}" > 
+                             <img class="rounded-circle" width="35" height="35" src="{{ Auth::user()->avatar }}" > 
                              @endif
                             </a>
                             <div class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarDropdown">

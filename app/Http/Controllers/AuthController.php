@@ -44,4 +44,38 @@ class AuthController extends Controller
             return redirect('/');
         }
     }
+
+
+    public function googleredirect()
+    {
+        return Socialite::driver('google')->redirect();
+    }
+
+    public function googlecallback()
+    {
+        $userdata = Socialite::driver('google')->user();
+
+        $user = User::where('email', $userdata->email)->where('auth_type', 'google')->first();
+        if ($user) {
+            $user->avatar = $userdata->avatar;
+            Auth::login($user);
+            //dd($userdata);
+            return redirect('/');
+
+        } else {
+
+            $uuid = Str::uuid()->toString();
+
+            $user = new User();
+            $user->name = $userdata->name;
+            $user->email = $userdata->email;
+            $user->password = Hash::make($uuid . now());
+            $user->auth_type = 'google';
+            $user->avatar = $userdata->avatar;
+            $user->save();
+            Auth::login($user);
+            //dd($userdata);
+            return redirect('/');
+        }
+    }
 }

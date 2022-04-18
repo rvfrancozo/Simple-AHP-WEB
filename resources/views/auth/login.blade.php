@@ -96,13 +96,13 @@
                     
                 </div>
 
-<a class="btn btn-block btn-social btn-twitter">
+<!-- <a class="btn btn-block btn-social btn-twitter">
     <span class="fa fa-twitter"></span> Sign in with Twitter
-</a><br>
-<a href="auth/github/redirect" class="btn btn-block btn-social btn-github">
+</a><br> -->
+<a href="{{route('githublogin')}}" class="btn btn-block btn-social btn-github">
     <span class="fa fa-github"></span> Sign in with Github
 </a><br>
-<a class="btn btn-block btn-social btn-google">
+<a href="{{route('googlelogin')}}"  class="btn btn-block btn-social btn-google">
     <span class="fa fa-google"></span> Sign in with Google
 </a>
             </div>

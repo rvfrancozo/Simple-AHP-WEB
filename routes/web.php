@@ -23,8 +23,11 @@ Route::get('/', function () {
     return view('welcome');
 });
 
-Route::get('/auth/github/redirect', [AuthController::class, 'githubredirect']);
+Route::get('/auth/github/redirect', [AuthController::class, 'githubredirect'])->name('githublogin');
 Route::get('/auth/github/callback', [AuthController::class, 'githubcallback']);
+
+Route::get('/auth/google/redirect', [AuthController::class, 'googleredirect'])->name('googlelogin');
+Route::get('/auth/google/callback', [AuthController::class, 'googlecallback']);
 
 Auth::routes();
 
