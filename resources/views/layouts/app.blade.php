@@ -1538,7 +1538,7 @@
 
                         <a href="/formCreateNode/0"> New Decision Problem</a>
                         &nbsp;&nbsp;&nbsp;&nbsp;
-                        <a href="{{ route('home') }}"> My Decision Problems</a>
+                        <a href="/home"> My Decision Problems</a>
 
                     </ul>
 
