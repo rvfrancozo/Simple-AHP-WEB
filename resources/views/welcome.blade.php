@@ -33,7 +33,7 @@
 @section('conteudo')
 <h3>AHP - <li>Simple</li></h3>
 <p>AHP (Analytic Hierarchy Process)</p>
-<p>Um dos métodos multicritério mais utilizados, developed by Dr. Thomas L. Saaty (1980);</p>
+<p>A widely used multi-criteria method, developed by Dr. Thomas L. Saaty (1980);</p>
 <p>AHP divides the decision problem into hierarchical levels, thus facilitating its understanding and evaluation.</p>
 <p></p>
 
