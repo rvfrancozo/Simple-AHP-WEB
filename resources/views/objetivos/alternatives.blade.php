@@ -88,8 +88,9 @@
     </table><hr>
 
     <div class="btn-group">
+      @if(count($alternatives) == 0)
             <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#rexcluir_{{$goal->id}}">New Alternative(s)</button>
-
+@endif
               <!-- Modal aqui -->
               <!-- The Modal -->
               <div class="modal" id="rexcluir_{{$goal->id}}">
