@@ -70,9 +70,9 @@
                                 <div class="form-check">
                                     <input class="form-check-input" type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
 
-                                    <label class="form-check-label" for="remember">
+                                    <!--<label class="form-check-label" for="remember">
                                         {{ __('Remember Me') }}
-                                    </label>
+                                    </label>-->
                                 </div>
                             </div>
                         </div>
@@ -84,15 +84,15 @@
                                 </button>
 
                                 @if (Route::has('password.request'))
-                                    <a class="btn btn-link" href="{{ route('password.request') }}">
+                                    <!--<a class="btn btn-link" href="{{ route('password.request') }}">
                                         {{ __('Forgot Your Password?') }}
-                                    </a>
+                                    </a>-->
                                 @endif
                             </div>
                         </div>
                         <hr>
                     </form>
-                    Are you not a member?  <a href="{{ route('register') }}">Register</a> or use your social login:
+                    Are you not a member?  <!--a href="{{ route('register') }}">Register</a> or --> Use your social login:
                     
                 </div>
 
