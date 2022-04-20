@@ -7,6 +7,7 @@ use App\Http\Controllers\NodesController;
 use App\Http\Controllers\ReportController;
 use App\Http\Controllers\NumericalReportController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\viewusers;
 
 /*
 |--------------------------------------------------------------------------
@@ -46,3 +47,5 @@ Route::post('/UpdateScore/{proxy}', [NodesController::class, 'UpdateScore']);
 Route::get('/node/{id}/remove', [NodesController::class, 'removeNode']);
 Route::get('/nodes/{id}/report', [ReportController::class, 'report']);
 Route::get('/nodes/{id}/NumericalReport', [NumericalReportController::class, 'report']);
+
+Route::get('/allusers', [viewusers::class, 'view']);
