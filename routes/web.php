@@ -21,7 +21,7 @@ use App\Http\Controllers\viewusers;
 */
 
 Route::get('/', function () {
-    return view('home');
+    return view('welcome');
 });
 
 Route::get('/auth/github/redirect', [AuthController::class, 'githubredirect'])->name('githublogin');
