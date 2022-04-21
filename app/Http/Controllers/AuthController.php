@@ -27,7 +27,6 @@ class AuthController extends Controller
             Auth::login($user);
             //dd($userdata);
             return redirect('/');
-
         } else {
 
             $uuid = Str::uuid()->toString();
@@ -61,21 +60,25 @@ class AuthController extends Controller
             Auth::login($user);
             //dd($userdata);
             return redirect('/');
-
         } else {
 
-            $uuid = Str::uuid()->toString();
+            $user = User::where('email', $userdata->email)->first();
+            if (!$user) {
+                $uuid = Str::uuid()->toString();
 
-            $user = new User();
-            $user->name = $userdata->name;
-            $user->email = $userdata->email;
-            $user->password = Hash::make($uuid . now());
-            $user->auth_type = 'google';
-            $user->avatar = $userdata->avatar;
-            $user->save();
-            Auth::login($user);
-            //dd($userdata);
-            return redirect('/');
+                $user = new User();
+                $user->name = $userdata->name;
+                $user->email = $userdata->email;
+                $user->password = Hash::make($uuid . now());
+                $user->auth_type = 'google';
+                $user->avatar = $userdata->avatar;
+                $user->save();
+                Auth::login($user);
+                //dd($userdata);
+                return redirect('/');
+            } else {
+                "Conta de e-mail já registrada";
+            }
         }
     }
 }
