@@ -77,7 +77,7 @@ class AuthController extends Controller
                 //dd($userdata);
                 return redirect('/');
             } else {
-                "Conta de e-mail já registrada";
+                return redirect('/');
             }
         }
     }
