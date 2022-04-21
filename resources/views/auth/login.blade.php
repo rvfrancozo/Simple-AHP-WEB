@@ -101,14 +101,13 @@
 </a><br> -->
 <a href="{{route('githublogin')}}" class="btn btn-block btn-social btn-github">
     <span class="fa fa-github"></span> Sign in with Github
-</a><br>
-
-<!--
+</a>
+<br>
 <a href="{{route('googlelogin')}}"  class="btn btn-block btn-social btn-google">
     <span class="fa fa-google"></span> Sign in with Google
 </a>
 
--->
+
             </div>
         </div>    
     </div>
