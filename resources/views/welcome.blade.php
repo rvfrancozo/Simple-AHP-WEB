@@ -31,7 +31,11 @@
 @stop
 
 @section('conteudo')
-<h3>AHP - <i>Simple</i></h3>
+    <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/social.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css">
+    <link rel="stylesheet" href="/css/bootstrap.min.css">
+<h3><i>Simple</i></ - AHP<h3>
 <p>AHP (Analytic Hierarchy Process)</p>
 <p>A widely used multi-criteria method, developed by Dr. Thomas L. Saaty (1980);</p>
 <p>AHP divides the decision problem into hierarchical levels, thus facilitating its understanding and evaluation.</p>
