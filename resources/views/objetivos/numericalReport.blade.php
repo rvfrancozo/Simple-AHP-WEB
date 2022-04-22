@@ -46,7 +46,7 @@
  <table class="table">
     <thead class="thead-light"> 
     <tr align="center">
-        <th>Critérios</th>
+        <th>Criteria</th>
         @foreach($results->getCriteria() as $q)
         
             <th scope="col">{{$q["descr"]}}</th>
