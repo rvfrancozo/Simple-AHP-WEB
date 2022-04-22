@@ -40,6 +40,9 @@
   <li class="nav-item">
     <a class="nav-link" href="NumericalReport">Numerical results</a>
   </li>
+  <li class="nav-item">
+    <a class="nav-link" href="HumanReport">Human results</a>
+  </li>
   
 </ul>
 
