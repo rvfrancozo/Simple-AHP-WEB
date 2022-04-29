@@ -8,6 +8,7 @@ use App\Models\Judments;
 
 class AHPController extends Controller {
 
+	//Normalize a Matrix of judments in AHP Scope
 	public static function Normalize($matrix) {
 		$dim = count($matrix);
 
@@ -30,6 +31,7 @@ class AHPController extends Controller {
 		return($n_matrix);
 	}
 
+	//Get an array of Priorities from a Criteria Matrix Judments
 	public static function GetPriority($julgamentos)	{
 		$n_matrix = AHPController::normalize($julgamentos);
 		$dim = count($n_matrix);
@@ -47,7 +49,7 @@ class AHPController extends Controller {
 	}
 
 	
-
+	//Return a float with the consistency of the judments matrix
 	public static function CheckConsistency($julgamentos) 	{
 		$saaty = array(0,0,0.00001,0.5247,0.8816,1.1086,1.2479,1.3417,1.4057,1.4499,1.4854);
 		$priority = AHPController::GetPriority($julgamentos);
@@ -69,6 +71,8 @@ class AHPController extends Controller {
 		return $cr;
 	}
 
+	//Given a alternatives and criteria judments matrix return the final priorities
+	//from alternatives
 	public static function FinalPriority($j_criteria, $j_alternatives) {
 
 		$c = count($j_alternatives); //quantidade de critérios
@@ -86,6 +90,7 @@ class AHPController extends Controller {
 		return($final);
 	}
 
+	//
 	public static function GetMatrix($objective, $level) {
 		$nodes = Node::get()->where('level', 1);
 

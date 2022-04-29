@@ -15,7 +15,7 @@ class NodesController extends Controller
 
     public function index()
     {
-        $objectives = Node::get()->where('level', 0)->where('user_id',Auth::user()->id);
+        $objectives = Node::get()->where('level', 0)->where('user_id', Auth::user()->id);
         return view("objetivos.nodes")->with('objectives', $objectives);
     }
 
@@ -234,6 +234,60 @@ class NodesController extends Controller
 
     public function UpdateScore($proxy, Request $request)
     {
+        echo $proxy;
+        $data = $request->all();
+        $s = explode(";", $data['score0']);
+        $up = $s[0];
+        $top = Judments::where('id_node', $s[0])->get();
+        $v = array();
+        foreach ($top as $t) {
+            array_push($v, $t->id_node1);
+            array_push($v, $t->id_node2);
+        }
+        $v = array_unique($v);
+        $nodes = array();
+        foreach ($v as $i) {
+            array_push($nodes, $i);
+        }
+        print_r($v);
+        echo max($v);
+        $matrix = array(array());
+
+        //Inicializa a matrix de julgamentos
+        for ($i = 0; $i <= max($v); $i++) {
+            for ($j = 0; $j <= max($v); $j++) {
+                $matrix[$i][$j] = 0;
+            }
+        }
+        //Preenche com a linha e faz a recíproca
+        for ($i = 0; $i < $data['counter']; $i++) {
+            $s = explode(";", $data['score' . $i]);
+            $matrix[$s[1]][$s[2]] = $s[3]; //julgamento do decisor
+            $matrix[$s[2]][$s[1]] = (1 / $s[3]); //recíproca
+        }
+
+        //Completa o que falta
+        for ($i = 0; $i < count($nodes); $i++) {
+            for ($j = $i + 1; $j < count($nodes); $j++) {
+                if ($matrix[$nodes[$i]][$nodes[$j]] == 0) {
+                    $matrix[$nodes[$i]][$nodes[$j]] = 1 / ($matrix[$proxy][$nodes[$i]] / $matrix[$proxy][$nodes[$j]]);
+                    $matrix[$nodes[$j]][$nodes[$i]] = ($matrix[$proxy][$nodes[$i]] / $matrix[$proxy][$nodes[$j]]);
+                }
+                echo "<br>" . $up . " - " . $nodes[$i] . " - " . $nodes[$j] . " - " . $matrix[$nodes[$i]][$nodes[$j]];
+                Judments::where('id_node', $up)
+                    ->where('id_node1', $nodes[$i])
+                    ->where('id_node2', $nodes[$j])
+                    ->update(['score' => $matrix[$nodes[$i]][$nodes[$j]]]);
+            }
+        }
+
+        return redirect("/nodes");
+    }
+
+    /*public function UpdateScore($proxy, Request $request)
+    
+    {
+        echo $proxy . "<br>";
         $score = new Score;
         $data = $request->all();
         $x = array(array(array())); //id_node - id_node1 - id_node2
@@ -254,28 +308,67 @@ class NodesController extends Controller
                 $id_node2 = $s[1];
                 $id_node1 = $s[2];
             }
-            echo $s[0] . " - " . $id_node1 . " - " . $id_node2 . " = " . $s[3] . "<hr>";
+
             if ($id_node1 == $proxy) {
                 $x[$s[0]][$id_node1][$id_node2] = $s[3];
+                $scr = $s[3];
             }
             if ($id_node2 == $proxy) {
-                $x[$s[0]][$id_node2][$id_node1] = $s[3];
+                $x[$s[0]][$id_node2][$id_node1] = 1 / $s[3];
+                $scr = 1 / $s[3];
             }
-            Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $s[3]]);
+            echo $s[0] . " - " . $id_node1 . " - " . $id_node2 . " = " . $scr . "<hr>";
+            //Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $s[3]]);
+            Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $scr]);
         }
 
         $up = array_unique($up);
         $n = array_unique($n);
 
+        //ESTOU TRABALHANDO AQUI
         foreach ($up as $p) {
             for ($i = 0; $i < count($n); $i++) {
                 for ($j = $i + 1; $j < count($n); $j++) {
-                    $z = 1 / ($x[$p][$proxy][$n[$i]] / $x[$p][$proxy][$n[$j]]);
+                    if ($n[$i] == $proxy || $n[$j] == $proxy)
+                        $z = 1 / ($x[$p][$proxy][$n[$i]] / $x[$p][$proxy][$n[$j]]);
+                    else {
+                        if($proxy < $n[$i]) {
+                            $bfk1 = Judments::where('id_node', $p)->where('id_node1', $proxy)->where('id_node2', $n[$i])->first();
+                        } else {
+                            $bfk1 = Judments::where('id_node', $p)->where('id_node1', $n[$i])->where('id_node2', $proxy)->first();
+                        }
+
+                        if($proxy == $n[$i]) {
+
+                        } else {
+
+                        }
+
+                        if($proxy < $n[$j]) {
+                            $bfk2 = Judments::where('id_node', $p)->where('id_node1', $proxy)->where('id_node2', $n[$j])->first();
+                        } else {
+                            $bfk2 = Judments::where('id_node', $p)->where('id_node1', $n[$j])->where('id_node2', $proxy)->first();
+                        }
+
+                        if($proxy == $n[$j]) {
+                            
+                            $z = $bfk1->score/$bfk2->score;
+                        } else {
+                            echo "<hr>".pow($bfk1->score,(-1))." / ".$bfk2->score."<hr>";
+                            $z = pow($bfk1->score,(-1))/$bfk2->score;
+                        }
+                        
+                        
+                        echo $z;
+                        $z = 1;
+                        
+                    }
+                        
                     echo ":" . $p . " - " . $n[$i] . " - " . $n[$j] . " == " . $z . "<br>";
                     Judments::where('id_node', $p)->where('id_node1', $n[$i])->where('id_node2', $n[$j])->update(['score' => $z]);
                 }
             }
         }
-        return redirect("/nodes");
-    }
+        //return redirect("/nodes");
+    }*/
 }
