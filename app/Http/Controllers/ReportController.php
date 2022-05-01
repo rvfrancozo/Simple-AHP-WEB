@@ -90,7 +90,6 @@ class ReportController extends Controller
 
          $results->setBestCriteriaPriority(0);
          for($i = 0; $i < count($results->getPriority()); $i++){
-            //echo $results->getPriority()[$i]." - ".$results->getCriteria()[$i]->descr."<br>";
             if($results->getPriority()[$i] > $results->getBestCriteriaPriority()){
                  $results->setBestCriteriaPriority($results->getPriority()[$i]);
                  $results->setBestCriteria($results->getCriteria()[$i]->descr);
@@ -99,7 +98,6 @@ class ReportController extends Controller
 
          $results->setBestAlternativeScore(0);
          for($i = 0; $i < count($results->getScore()); $i++){
-            //echo $results->getScore()[$i]." - ".$results->getAlternatives()[$i]->descr."<br>";
 
             if($results->getScore()[$i] > $results->getBestAlternativeScore()){
                 $results->setBestAlternativeScore($results->getScore()[$i]);
