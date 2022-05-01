@@ -83,7 +83,7 @@ class Testes extends Controller
 
         $results->setBestCriteriaPriority(0);
         for ($i = 0; $i < count($results->getPriority()); $i++) {
-            //echo "<br>".$results->getCriteria()[$i]->descr.": ".$results->getPriority()[$i];
+            echo "<br>".$results->getCriteria()[$i]->descr.": ".$results->getPriority()[$i];
             if ($results->getPriority()[$i] > $results->getBestCriteriaPriority()) {
                 $results->setBestCriteriaPriority($results->getPriority()[$i]);
                 $results->setBestCriteria($results->getCriteria()[$i]->descr);
