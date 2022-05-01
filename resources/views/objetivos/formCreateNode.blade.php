@@ -38,7 +38,7 @@
     <form method="POST" action="/createNode/{{$up}}">
         @csrf
         <div class="form-group">
-        @for ($i = 0; $i < $nodes; $i++)
+        @for ( $i = 0; $i < $nodes; $i++ )
         <label for="descricao">Name:</label>
         <input autocomplete="off" type="text" class="form-control" placeholder="" id="descricao" name="descricao[{{$i}}]">
         @endfor
