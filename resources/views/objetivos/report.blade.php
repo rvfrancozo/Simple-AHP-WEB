@@ -52,7 +52,7 @@
 	
 </div>
 
-<!--
+<!-- 
     <h5 class="card-title">Criterios</h5>
 
    @foreach($results->getCriteria() as $q)

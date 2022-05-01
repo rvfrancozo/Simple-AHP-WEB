@@ -139,7 +139,7 @@
                 </td>
                 @else
                 <td>
-                    <h6 style="color: black"><b>{{round($c,2)}}</b></h6><!-- {{++$k}} -->
+                    <h6 style="color: black"><b>{{round($c,2)}}</b></h6><!-- {{ ++$k }} -->
                 </td>
                 @endif
 

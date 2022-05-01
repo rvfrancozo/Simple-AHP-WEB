@@ -67,7 +67,7 @@
             }
             echo "<br>";
         }
---> 
+ --> 
  
 
     @foreach($j_criteria as $c)
