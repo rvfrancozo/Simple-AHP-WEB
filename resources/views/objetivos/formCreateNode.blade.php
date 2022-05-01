@@ -35,7 +35,7 @@
     <h3>Create new {{$descr}}</h3>
   </div>
   <div class="card-body">
-    <form method="POST" action="/createNode/{{$up}}">
+    <form autocomplete="off" method="POST" action="/createNode/{{$up}}">
         @csrf
         <div class="form-group">
         @for ( $i = 0; $i < $nodes; $i++ )
