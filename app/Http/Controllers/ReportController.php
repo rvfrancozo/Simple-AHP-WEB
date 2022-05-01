@@ -92,6 +92,7 @@ class ReportController extends Controller
          for($i = 0; $i < count($results->getPriority()); $i++){
             if($results->getPriority()[$i] > $results->getBestCriteriaPriority()){
                  $results->setBestCriteriaPriority($results->getPriority()[$i]);
+                 echo $results->getCriteria()[$i]->descr;
                  $results->setBestCriteria($results->getCriteria()[$i]->descr);
              }    
         }
@@ -106,7 +107,7 @@ class ReportController extends Controller
         }
 
 
-       return view("objetivos.report")->with('results', $results);
+       //return view("objetivos.report")->with('results', $results);
      
         //AHPController::Normalize($j_criteria);
         
