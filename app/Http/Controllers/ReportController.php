@@ -86,7 +86,7 @@ class ReportController extends Controller
         //     }
         // }
 
-        //$temp = 10;
+        //$temp = 10
 
          $results->setBestCriteriaPriority(0);
          for($i = 0; $i < count($results->getPriority()); $i++){

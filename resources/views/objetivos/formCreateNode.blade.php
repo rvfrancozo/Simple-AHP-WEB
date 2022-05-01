@@ -40,9 +40,9 @@
         <div class="form-group">
         @for ($i = 0; $i < $nodes; $i++)
         <label for="descricao">Name:</label>
-        <input type="text" class="form-control" placeholder="" id="descricao" name="descricao[{{$i}}]">
+        <input autocomplete="off" type="text" class="form-control" placeholder="" id="descricao" name="descricao[{{$i}}]">
         @endfor
-        <input type=hidden name="level" value={{$level}}>
+        <input autocomplete="off" type=hidden name="level" value={{$level}}>
       </div>
       <div class="btn-group">
         <button type="submit" class="btn btn-primary">Save</button>
