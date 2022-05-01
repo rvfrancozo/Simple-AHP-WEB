@@ -55,4 +55,4 @@ Route::get('/nodes/{id}/HumanReport', [HumanReportController::class, 'report']);
 
 Route::get('/allusers', [viewusers::class, 'view']);
 
-Route::get('/testes', [Testes::class, 'testes']);
+Route::get('/testes/{id}', [Testes::class, 'testes']);
