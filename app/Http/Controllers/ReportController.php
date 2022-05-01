@@ -107,7 +107,7 @@ class ReportController extends Controller
         }
 
 
-       //return view("objetivos.report")->with('results', $results);
+       return view("objetivos.report")->with('results', $results);
      
         //AHPController::Normalize($j_criteria);
         
