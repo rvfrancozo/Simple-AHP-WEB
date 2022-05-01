@@ -8,6 +8,7 @@ use App\Http\Controllers\ReportController;
 use App\Http\Controllers\HumanReportController;
 use App\Http\Controllers\NumericalReportController;
 use App\Http\Controllers\AuthController;
+use App\Http\Controllers\Testes;
 use App\Http\Controllers\viewusers;
 
 /*
@@ -53,3 +54,5 @@ Route::get('/nodes/{id}/HumanReport', [HumanReportController::class, 'report']);
 
 
 Route::get('/allusers', [viewusers::class, 'view']);
+
+Route::get('/testes', [Testes::class, 'testes']);
