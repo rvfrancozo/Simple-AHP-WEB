@@ -9,6 +9,6 @@ class Testes extends Controller
 
     public function testes()
     {
-        # code...
+        echo "hi ";
     }
 }
