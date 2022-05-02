@@ -51,9 +51,9 @@ class Testes extends Controller
         //);
         $results->setCriteria($query);
         $results->setPriority(AHPController::GetPriority($j_criteria));
-        // foreach($query as $q) {
-        //     echo "<br>".$q->descr;
-        // }
+        foreach($query as $q) {
+            echo "<br>".$q->descr;
+        }
         for($i = 0; $i < count($results->getCriteria()); $i++) {
             echo "<br>".$results->getPriority()[$i].": ".
             $results->getCriteria()[$i]->descr;
