@@ -41,7 +41,7 @@ class Testes extends Controller
                 ->select('node.descr')
 
                 //Ordena pelo ID
-                ->orderBy('node.id', 'asc')
+                //->orderBy('node.id', 'asc')
 
                 //Não aceita duplicados teste
                 ->distinct()
