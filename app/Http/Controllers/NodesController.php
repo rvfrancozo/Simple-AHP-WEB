@@ -28,7 +28,6 @@ class NodesController extends Controller
                 ->orOn('judments.id_node2', '=', 'node.id');
         })
             ->where('judments.id_node', $id)
-            ->where('node.user_id', Auth::user()->id)
             ->select('node.id', 'node.descr')
             ->distinct()
             ->get();
@@ -45,7 +44,6 @@ class NodesController extends Controller
                 ->orOn('judments.id_node2', '=', 'node.id');
         })
             ->where('judments.id_node', $id)
-            ->where('node.user_id', Auth::user()->id)
             ->select('node.id')
             ->distinct()
             ->get();
@@ -62,11 +60,10 @@ class NodesController extends Controller
         })
             ->whereIn('judments.id_node', $v)
             ->select('node.id', 'node.descr')
-            ->where('node.user_id', Auth::user()->id)
             ->distinct()
             ->get();
 
-        $objective = Node::get()->where('user_id', Auth::user()->id)->where('id', $id);
+        $objective = Node::get()->where('id', $id);
         $goal = $objective[$id - 1];
 
         return view("objetivos.alternatives")->with('alternatives', $alternatives)->with('goal', $goal);
@@ -81,13 +78,7 @@ class NodesController extends Controller
                 ->orOn('judments.id_node2', '=', 'node.id');
         })
             ->where('node.id', '=', $id)
-            ->where('node.user_id', Auth::user()->id)
             ->select('judments.id_node')
-            ->distinct()
-            ->get();
-
-        foreach ($query as $q)
-            array_push($ids, $q->id_node);
 
         $objective = Node::get()->whereIn('id', $ids);
 
@@ -96,13 +87,12 @@ class NodesController extends Controller
                 ->orOn('judments.id_node2', '=', 'node.id');
         })
             ->where('node.id', '!=', $id)
-            ->where('node.user_id', Auth::user()->id)
             ->whereIn('judments.id_node', $ids)
             ->select('node.id', 'node.descr')
             ->distinct()
             ->get();
 
-        $target = Node::where('user_id', Auth::user()->id)->where('id', $id)->get();
+        $target = Node::where('id', $id)->get();
 
         return view("objetivos.comparisons")->with('itens', $criteria)->with('goal', $objective)->with('target', $target)->with('id', $id);
     }
@@ -121,14 +111,14 @@ class NodesController extends Controller
             return view("objetivos.formCreateNode")->with('itens', $itens)->with('nodes', $nodes)->with('descr', $descr)->with('up', $up)->with('level', 0);
         } elseif ($data['type'] == 1) {
 
-            $query = Node::select('descr')->where('user_id', Auth::user()->id)->where('id', $up);
+            $query = Node::select('descr')->where('id', $up);
             $q = $query->first();
 
             $descr = "Criteria for " . $q->descr . " Decision Problem";
             return view("objetivos.formCreateNode")->with('itens', $itens)->with('nodes', $data['nodes'])->with('descr', $descr)->with('up', $up)->with('level', 1);
         } elseif ($data['type'] == 2) {
 
-            $query = Node::select('descr')->where('user_id', Auth::user()->id)->where('id', $up);
+            $query = Node::select('descr')->where('id', $up);
             $q = $query->first();
             $descr = "Alternatives for " . $q->descr . " Decision Problem";
 
@@ -167,8 +157,8 @@ class NodesController extends Controller
         }
 
         if ($level == 2) {
-            $id_node1 = Judments::select('id_node1')->distinct()->where('user_id', Auth::user()->id)->where('id_node', $up);
-            $id_node2 = Judments::select('id_node2')->distinct()->where('user_id', Auth::user()->id)->where('id_node', $up)->union($id_node1)->get();
+            $id_node1 = Judments::select('id_node1')->distinct()->where('id_node', $up);
+            $id_node2 = Judments::select('id_node2')->distinct()->where('id_node', $up)->union($id_node1)->get();
 
 
             foreach ($id_node2 as $node) {
@@ -200,7 +190,6 @@ class NodesController extends Controller
                     ->orOn('judments.id_node2', '=', 'node.id');
             })
                 ->where('judments.id_node', $v[$i])
-                ->where('node.user_id', Auth::user()->id)
                 ->select('node.id', 'node.descr')
                 ->distinct()
                 ->get();
@@ -212,9 +201,9 @@ class NodesController extends Controller
         } while ($i < count($v));
         $v = array_unique($v);
         Node::whereIn('id', $v)->delete();
-        Judments::where('user_id', Auth::user()->id)->whereIn('id_node', $v)->delete();
-        Judments::where('user_id', Auth::user()->id)->whereIn('id_node1', $v)->delete();
-        Judments::where('user_id', Auth::user()->id)->whereIn('id_node2', $v)->delete();
+        Judments::whereIn('id_node', $v)->delete();
+        Judments::whereIn('id_node1', $v)->delete();
+        Judments::whereIn('id_node2', $v)->delete();
         return redirect("/nodes");
     }
 
@@ -224,7 +213,7 @@ class NodesController extends Controller
         $data = $request->all();
         $s = explode(";", $data['score0']);
         $up = $s[0];
-        $top = Judments::where('user_id', Auth::user()->id)->where('id_node', $s[0])->get();
+        $top = Judments::where('id_node', $s[0])->get();
         $v = array();
         foreach ($top as $t) {
             array_push($v, $t->id_node1);
@@ -263,7 +252,6 @@ class NodesController extends Controller
                 Judments::where('id_node', $up)
                     ->where('id_node1', $nodes[$i])
                     ->where('id_node2', $nodes[$j])
-                    ->where('user_id', Auth::user()->id)
                     ->update(['score' => $matrix[$nodes[$i]][$nodes[$j]]]);
             }
         }
