@@ -40,7 +40,7 @@ class Testes extends Controller
                 //Campo que seleciona da tabela
                 ->select('node.descr')
 
-                //Não aceita duplicados
+                //Não aceita duplicados teste
                 ->distinct()
 
                 //Ordena pelo ID
