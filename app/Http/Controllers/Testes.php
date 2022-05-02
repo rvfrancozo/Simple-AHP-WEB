@@ -38,7 +38,7 @@ class Testes extends Controller
                 ->where('judments.id_node', $id)
 
                 //Campo que seleciona da tabela
-                ->select('node.id','node.descr')
+                ->select('node.descr')
 
                 //Ordena pelo ID
                 //->orderBy('node.id', 'asc')
@@ -49,12 +49,17 @@ class Testes extends Controller
                 //Get ;)
                 ->get();
         //);
-
-        foreach($query as $q) {
-            echo "<br>".$q->id.": ".$q->descr;
+        $results->setCriteria($query);
+        $results->setPriority(AHPController::GetPriority($j_criteria));
+        // foreach($query as $q) {
+        //     echo "<br>".$q->descr;
+        // }
+        for($i = 0; $i < count($results->getCriteria()); $i++) {
+            echo "<br>".$results->getPriority()[$i].": ".
+            $results->getCriteria()[$i]->descr;
         }
-echo"<hr>";
-        print_r(AHPController::GetPriority($j_criteria));
+        
+
 /*
         //Para mostrar as alternativas é necessário pegar os ids dos critérios
         $alternatives = Judments::join('node', function ($join) {
