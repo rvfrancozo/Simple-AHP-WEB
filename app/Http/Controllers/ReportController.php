@@ -8,6 +8,8 @@ use App\Models\Results;
 use App\Models\Judments;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AHPController;
+use Illuminate\Support\Facades\Auth;
+
 
 class ReportController extends Controller
 {
@@ -36,6 +38,9 @@ class ReportController extends Controller
             //condição de consulta
             ->where('judments.id_node', $id)
 
+            //Apenas os julgamentos do usuário logado
+            ->where('judments.user_id', Auth::user()->id)
+
             //Campo que seleciona da tabela
             //necessário consultar o ID para ordenar por ele.
             ->select('node.id','node.descr')
@@ -53,6 +58,8 @@ class ReportController extends Controller
                 ->orOn('judments.id_node2', '=', 'node.id');
         })
             ->where('judments.id_node', $id)
+            //Apenas os julgamentos do usuário logado
+            ->where('judments.user_id', Auth::user()->id)
             ->select('node.id')
             ->distinct()
             ->get();
