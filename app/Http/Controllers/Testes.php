@@ -43,6 +43,9 @@ class Testes extends Controller
                 //Não aceita duplicados
                 ->distinct()
 
+                //Ordena pelo ID
+                ->orderBy('node.id', 'asc')
+
                 //Get ;)
                 ->get();
         //);
