@@ -25,8 +25,8 @@ class Testes extends Controller
         //Adicionamos o objetivo ao objeto de resultados
         $results->setObjective($query->descr);
 
-        $results->setCriteria(
-            Judments:: //Consulta na tabela Judments que será armazenada na variável $query
+        //$results->setCriteria(
+        $query = Judments:: //Consulta na tabela Judments que será armazenada na variável $query
 
                 //Aqui faz um join composto entre as duas tabelas (judments e node)
                 join('node', function ($join) {
@@ -44,9 +44,15 @@ class Testes extends Controller
                 ->distinct()
 
                 //Get ;)
-                ->get()
-        );
+                ->get();
+        //);
 
+        foreach($query as $q) {
+            echo "<br>".$q->descr;
+        }
+echo"<hr>";
+        print_r(AHPController::GetPriority($j_criteria));
+/*
         //Para mostrar as alternativas é necessário pegar os ids dos critérios
         $alternatives = Judments::join('node', function ($join) {
             $join->on('judments.id_node1', '=', 'node.id')
@@ -97,6 +103,7 @@ class Testes extends Controller
                 $results->setBestAlternativeScore($results->getScore()[$i]);
                 $results->setBestAlternative($results->getAlternatives()[$i]->descr);
             }
-        }
+        }*/
     }
+    
 }
