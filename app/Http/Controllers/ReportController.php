@@ -37,7 +37,7 @@ class ReportController extends Controller
             ->where('judments.id_node', $id)
 
             //Campo que seleciona da tabela
-            ->select('node.descr')
+            ->select('node.id','node.descr')
 
             //Não aceita duplicados
             ->distinct()
