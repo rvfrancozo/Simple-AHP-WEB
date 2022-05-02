@@ -38,7 +38,7 @@ class Testes extends Controller
                 ->where('judments.id_node', $id)
 
                 //Campo que seleciona da tabela
-                ->select('node.descr')
+                ->select('node.id','node.descr')
 
                 //Ordena pelo ID
                 //->orderBy('node.id', 'asc')
@@ -51,7 +51,7 @@ class Testes extends Controller
         //);
 
         foreach($query as $q) {
-            echo "<br>".$q->descr;
+            echo "<br>".$q->id.": ".$q->descr;
         }
 echo"<hr>";
         print_r(AHPController::GetPriority($j_criteria));
