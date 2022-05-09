@@ -105,7 +105,28 @@ class NodesController extends Controller
 
         $target = Node::where('id', $id)->get();
 
-        return view("objetivos.comparisons")->with('itens', $criteria)->with('goal', $objective)->with('target', $target)->with('id', $id);
+        $scores = array();
+
+        foreach ($criteria as $c) {
+            if ($id < $c->id)
+                $value = Judments::where('id_node', $up)
+                    ->where('id_node1', $id)
+                    ->where('id_node2', $c->id)
+                    ->first();
+            else
+                $value = Judments::where('id_node', $up)
+                    ->where('id_node1', $c->id)
+                    ->where('id_node2', $id)
+                    ->first();
+            array_push($scores, $value->score);
+        }
+
+        return view("objetivos.comparisons")
+        ->with('itens', $criteria)
+        ->with('goal', $objective)
+        ->with('target', $target)
+        ->with('scores', $scores)
+        ->with('id', $id);
     }
 
     public function formCreateNode($up, Request $request)
@@ -255,8 +276,8 @@ class NodesController extends Controller
         foreach ($v as $i) {
             array_push($nodes, $i);
         }
-        print_r($v);
-        echo max($v);
+        // print_r($v);
+        // echo max($v);
         $matrix = array(array());
 
         //Inicializa a matrix de julgamentos
