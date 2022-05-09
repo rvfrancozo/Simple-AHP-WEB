@@ -87,7 +87,7 @@
                         </td>
                         @else
                         <td scope="col">
-                            <h6 style="color: black"><b>{{round($jc,3)}}</b></h6><!-- {{++$j}} -->
+                            <a href="" style="color: black" title="{{$results->getCriteria()[++$j]['descr']}} is indifferent than {{$results->getCriteria()[$i]['descr']}}"><b>{{round($jc,3)}}</b></a>
                         </td>
                         @endif
 
