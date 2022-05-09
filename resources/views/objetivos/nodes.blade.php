@@ -32,6 +32,9 @@
 
 @section ('conteudo')
 <!-- {{ $x = 0 }}  -->
+@if (isset($error))
+<div class="alert-danger"> Criteria and alternatives are required to show the report. </div>
+@endif
 <div>
 	<table class="table table-bordered table-striped table-hover">
 		<thead>

@@ -53,7 +53,7 @@
           <td>
             <div class="btn-group">
               <a class="btn btn-sm btn-primary" href="\comparisons\{{$goal->id}}\{{$c->id}}">Comparisons</a>
-              <button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#excluir_{{$c->id}}">Remove</button>
+              <button type="button" disabled class="btn btn-sm btn-danger" data-toggle="modal" data-target="#excluir_{{$c->id}}">Remove</button>
 
               <!-- Modal aqui -->
               <!-- The Modal -->

@@ -19,6 +19,12 @@ class NodesController extends Controller
         return view("objetivos.nodes")->with('objectives', $objectives);
     }
 
+    public function error()
+    {
+        $objectives = Node::get()->where('level', 0)->where('user_id', Auth::user()->id);
+        return view("objetivos.nodes")->with('objectives', $objectives)->with('error', 'error');
+    }
+
     public function criteria($id)
     {
         # select DISTINCT node.descr from judments inner join node on (judments.id_node1 = node.id OR judments.id_node2 = node.id) where judments.id_node = $id;

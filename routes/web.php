@@ -39,6 +39,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/AHP', [AHPController::class, 'AHP']);
 
 Route::get('/nodes', [NodesController::class, 'index']);
+Route::get('/error', [NodesController::class, 'error']);
 //Route::get('/home', [NodesController::class, 'index']);
 Route::get('/home', function () { return redirect('/'); });
 Route::get('/nodes/{id}/criteria', [NodesController::class, 'criteria']);
