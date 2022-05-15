@@ -56,14 +56,15 @@
 				<td>
 					<div class="btn-group">
 						<a href="/nodes/{{ $o['id'] }}/criteria" class="btn btn-sm btn-primary" data-toggle="tooltip" title="">Criteria</a>
-						<a href="/nodes/{{ $o['id'] }}/alternatives" class="btn btn-sm btn-primary" data-toggle="tooltip" title="teste">Alternatives</a>
+						&nbsp;<a href="/nodes/{{ $o['id'] }}/alternatives" class="btn btn-sm btn-primary" data-toggle="tooltip" title="teste">Alternatives</a>
 					</div>
 				</td>
 
 				<td>
 					<div class="btn-group">
-						<a class="btn btn-primary btn-sm" href="/nodes/{{$o->id}}/report">Report</a>
-						<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#excluir_{{$o->id}}" disabled>Remove</button>
+						<a class="btn btn-primary btn-sm" href="/nodes/{{$o->id}}/report">Report <i class='fas fa-poll' style='font-size:12px;color:white'></i></a>
+						&nbsp;<a class="btn btn-primary btn-sm" href="#">Group <i class='fas fa-users' style='font-size:12px;color:white'></i> </a>
+						&nbsp;<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#excluir_{{$o->id}}" disabled>Remove</button>
 					</div>
 					<div class="modal" id="excluir_{{$o->id}}">
 						<div class="modal-dialog">

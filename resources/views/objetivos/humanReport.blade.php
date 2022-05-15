@@ -80,10 +80,10 @@
                     </td>
                     <!-- {{$j = -1}} -->
                     @foreach($c as $jc)
-                    @if($jc < 1) <td scope="col"><a href="" style="color: red" title="{{$results->getCriteria()[$i]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
+                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$results->getCriteria()[$i]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
                         @elseif($jc > 1)
                         <td scope="col">
-                            <a href="" style="color: blue" title="{{$results->getCriteria()[++$j]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round($jc,3)}}</b></a>
+                            <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$results->getCriteria()[++$j]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round($jc,3)}}</b></a>
                         </td>
                         @else
                         <td scope="col">
@@ -91,8 +91,50 @@
                         </td>
                         @endif
 
+                        <div class="modal" id="excluir_{{$i}}_{{$j}}">
+                            <div class="modal-dialog">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                        <h4 class="modal-title">Update Judment #{{$i}} _{{$j}}</h4>
+                                        <!--<button type="button" class="close" data-dismiss="modal"></button>-->
+                                    </div>
+                                    <div class="modal-body">
+                                        Update comparison between:
+                                        <strong>{{$results->getCriteria()[$i]['descr']}} X {{$results->getCriteria()[$j]['descr']}}</strong>
+                                    </div>
+                                    <form method="POST" action="/UpdateSingleScore">
+                                        @csrf
+                                        <select id="newjudment" name="newjudment">
+                                            <option value="">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/7 {{$results->getCriteria()[$j]['descr']}} is 7x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/6 {{$results->getCriteria()[$j]['descr']}} is 6x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/5 {{$results->getCriteria()[$j]['descr']}} is 5x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/4 {{$results->getCriteria()[$j]['descr']}} is 4x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/3 {{$results->getCriteria()[$j]['descr']}} is 3x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="">1/2 {{$results->getCriteria()[$j]['descr']}} is 2x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option selected value="">1 {{$results->getCriteria()[$i]['descr']}} is indifferent than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">2 {{$results->getCriteria()[$i]['descr']}} is 2x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">3 {{$results->getCriteria()[$i]['descr']}} is 3x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">4 {{$results->getCriteria()[$i]['descr']}} is 4x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">5 {{$results->getCriteria()[$i]['descr']}} is 5x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">6 {{$results->getCriteria()[$i]['descr']}} is 6x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                        </select>
+                                        <div class="modal-footer">
+                                            <div class="btn-group">
+                                                <button type="submit" class="btn btn-primary">Save</button>
+                                                <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                                <!--<a class="btn btn-danger" href="#">Remove</a>-->
+                                            </div>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
                         @endforeach
-
                 </tr>@endforeach
             </tbody>
         </table>
@@ -133,9 +175,9 @@
                 </td>
                 @elseif($c > 1)
                 <td>
-                <a href="" style="color: blue" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[++$k]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
-                    <b>{{round($c,2)}}</b>
-    </a>
+                    <a href="" style="color: blue" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[++$k]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
+                        <b>{{round($c,2)}}</b>
+                    </a>
                 </td>
                 @else
                 <td>
