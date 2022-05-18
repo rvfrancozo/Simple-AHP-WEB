@@ -9,6 +9,7 @@ use App\Http\Controllers\HumanReportController;
 use App\Http\Controllers\NumericalReportController;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Testes;
+use App\Http\Controllers\NotesController;
 use App\Http\Controllers\viewusers;
 
 /*
@@ -53,6 +54,8 @@ Route::get('/node/{id}/remove', [NodesController::class, 'removeNode']);
 Route::get('/nodes/{id}/report', [ReportController::class, 'report']);
 Route::get('/nodes/{id}/NumericalReport', [NumericalReportController::class, 'report']);
 Route::get('/nodes/{id}/HumanReport', [HumanReportController::class, 'report']);
+Route::post('/notes', [NotesController::class, 'notes']);
+
 
 
 Route::get('/allusers', [viewusers::class, 'view']);

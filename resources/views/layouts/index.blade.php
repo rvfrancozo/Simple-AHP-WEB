@@ -56,6 +56,12 @@
             <!-- Right Side Of Navbar -->
 
             <ul class="navbar-nav ms-auto">
+            <li>
+		<form method="POST" action="/notes">
+			@csrf
+			<button style="border:none;background-color:transparent" type="submit" class="nav-link">Sobre...</button>
+		</form>
+	</li>
                 <!-- Authentication Links -->
                 @guest
                 @if (Route::has('login'))
