@@ -162,6 +162,7 @@ class NodesController extends Controller
             $node = new Node();
             $node->level = $level;
             $node->user_id = Auth::user()->id;
+            $node->user_email = Auth::user()->email;
             $node->descr = $data['descricao'][$i];
             $node->save();
             array_push($ids, $node->id);
@@ -173,6 +174,7 @@ class NodesController extends Controller
                     $judment = new Judments();
                     $judment->id_node = $up;
                     $judment->user_id = Auth::user()->id;
+                    $judment->user_email = Auth::user()->email;
                     $judment->id_node1 = $ids[$i];
                     $judment->id_node2 = $ids[$j];
                     $judment->score = 1;
@@ -192,6 +194,7 @@ class NodesController extends Controller
                         $judment = new Judments();
                         $judment->id_node = $node->id_node2;
                         $judment->user_id = Auth::user()->id;
+                        $judment->user_email = Auth::user()->email;
                         $judment->id_node1 = $ids[$i];
                         $judment->id_node2 = $ids[$j];
                         $judment->score = 1;
@@ -277,5 +280,19 @@ class NodesController extends Controller
             }
         }
         return redirect("/nodes");
+    }
+
+    public function UpdateSingleScore(Request $request)
+    {
+        $data = $request->all();
+        $s = explode(";", $data['newjudment']);
+        
+        if($s[1] < $s[2]) {
+            Judments::where('id_node',$s[0])->where('id_node1',$s[1])->where('id_node2',$s[2])->update(['score' => 1/$s[3]]);
+        } else {
+            Judments::where('id_node',$s[0])->where('id_node1',$s[2])->where('id_node2',$s[1])->update(['score' => $s[3]]);
+        }
+
+        return redirect("/nodes/".$s[0]."/HumanReport");
     }
 }

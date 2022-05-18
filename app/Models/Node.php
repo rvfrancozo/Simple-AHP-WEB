@@ -11,7 +11,7 @@ class Node extends Model
 
     protected $table = 'node';
 
-    protected $fillable = ['level', 'descr', 'user_id'];
+    protected $fillable = ['level', 'descr', 'user_id','user_email'];
 
     public static function funny()
     {

@@ -25,29 +25,53 @@ class HumanReportController extends Controller
         $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0);
 
         $query = Node::find($id); //Busca pelo id da tabela node
-        
+
         //Adicionamos o objetivo ao objeto de resultados
         $results->setObjective($query->descr);
+        $results->setObjectiveId($query->id);
 
-        $results->setCriteria( Judments:: //Consulta na tabela Judments que será armazenada na variável $query
+        $results->setCriteria(
+            Judments:: //Consulta na tabela Judments que será armazenada na variável $query
 
-            //Aqui faz um join composto entre as duas tabelas (judments e node)
-            join('node', function ($join) {
-                $join->on('judments.id_node1', '=', 'node.id')
-                    ->orOn('judments.id_node2', '=', 'node.id');
-            })
+                //Aqui faz um join composto entre as duas tabelas (judments e node)
+                join('node', function ($join) {
+                    $join->on('judments.id_node1', '=', 'node.id')
+                        ->orOn('judments.id_node2', '=', 'node.id');
+                })
 
-            //condição de consulta
-            ->where('judments.id_node', $id)
+                //condição de consulta
+                ->where('judments.id_node', $id)
 
-            //Campo que seleciona da tabela
-            ->select('node.descr')
+                //Campo que seleciona da tabela
+                ->select('node.descr')
 
-            //Não aceita duplicados
-            ->distinct()
+                //Não aceita duplicados
+                ->distinct()
 
-            //Get ;)
-            ->get()
+                //Get ;)
+                ->get()
+        );
+
+        $results->setNodeId(
+            Judments:: //Consulta na tabela Judments que será armazenada na variável $query
+
+                //Aqui faz um join composto entre as duas tabelas (judments e node)
+                join('node', function ($join) {
+                    $join->on('judments.id_node1', '=', 'node.id')
+                        ->orOn('judments.id_node2', '=', 'node.id');
+                })
+
+                //condição de consulta
+                ->where('judments.id_node', $id)
+
+                //Campo que seleciona da tabela
+                ->select('node.id')
+
+                //Não aceita duplicados
+                ->distinct()
+
+                //Get ;)
+                ->get()
         );
 
         //Para mostrar as alternativas é necessário pegar os ids dos critérios
@@ -67,23 +91,24 @@ class HumanReportController extends Controller
         }
 
         //agora faz a consulta com um join composto
-        $results->setAlternatives( Judments::join('node', function ($join) {
-            $join->on('judments.id_node1', '=', 'node.id')
-                ->orOn('judments.id_node2', '=', 'node.id');
-        })
-            //busca resultados que estejam dentro do array $v
-            ->whereIn('judments.id_node', $v)
-            ->select('node.id', 'node.descr')
-            ->distinct()
-            ->get()
+        $results->setAlternatives(
+            Judments::join('node', function ($join) {
+                $join->on('judments.id_node1', '=', 'node.id')
+                    ->orOn('judments.id_node2', '=', 'node.id');
+            })
+                //busca resultados que estejam dentro do array $v
+                ->whereIn('judments.id_node', $v)
+                ->select('node.id', 'node.descr')
+                ->distinct()
+                ->get()
         );
 
         //Pega os scores
         $results->setScore(AHPController::FinalPriority($j_criteria, $j_alternatives));
 
-        $results->setPriority( AHPController::GetPriority($j_criteria) );
-        
-        
+        $results->setPriority(AHPController::GetPriority($j_criteria));
+
+
         // foreach($results->getPriority() as $pf) {
         //     if($pf > $temp){
         //         $temp = $pf;
@@ -92,33 +117,33 @@ class HumanReportController extends Controller
 
         //$temp = 10;
 
-         $results->setBestCriteriaPriority(0);
-         for($i = 0; $i < count($results->getPriority()); $i++){
-            if($results->getPriority()[$i] > $results->getBestCriteriaPriority()){
-                 $results->setBestCriteriaPriority($results->getPriority()[$i]);
-                 $results->setBestCriteria($results->getCriteria()[$i]->descr);
-             }    
+        $results->setBestCriteriaPriority(0);
+        for ($i = 0; $i < count($results->getPriority()); $i++) {
+            if ($results->getPriority()[$i] > $results->getBestCriteriaPriority()) {
+                $results->setBestCriteriaPriority($results->getPriority()[$i]);
+                $results->setBestCriteria($results->getCriteria()[$i]->descr);
+            }
         }
 
-         $results->setBestAlternativeScore(0);
-         for($i = 0; $i < count($results->getScore()); $i++){
+        $results->setBestAlternativeScore(0);
+        for ($i = 0; $i < count($results->getScore()); $i++) {
             //echo $results->getScore()[$i]."<br>";
 
-            if($results->getScore()[$i] > $results->getBestAlternativeScore()){
+            if ($results->getScore()[$i] > $results->getBestAlternativeScore()) {
                 $results->setBestAlternativeScore($results->getScore()[$i]);
                 $results->setBestAlternative($results->getAlternatives()[$i]->descr);
-            }    
+            }
         }
 
-//dd($j_criteria);
-//dd($j_alternatives)
+        //dd($j_criteria);
+        //dd($j_alternatives)
 
         return view("objetivos.humanReport")->with('results', $results)
-        ->with('j_criteria', $j_criteria)
-        ->with('j_alternatives', $j_alternatives);
-     
+            ->with('j_criteria', $j_criteria)
+            ->with('j_alternatives', $j_alternatives);
+
         //AHPController::Normalize($j_criteria);
-        
+
         AHPController::CheckConsistency($j_criteria);
 
         echo "<hr><b>Matrix of Criteria Judments:</b><br>"; //Mostra os critérios do objetivo
@@ -128,10 +153,10 @@ class HumanReportController extends Controller
             }
             echo "<br>";
         }
-        
+
         echo "<hr><b>Matrix of Alternatives Judments:</b><br>";
 
-            print_r($j_alternatives);
+        print_r($j_alternatives);
 
         echo "<hr><b>Normalized Matrix of Criteria Judments:</b><br>";
         print_r(AHPController::Normalize($j_criteria));

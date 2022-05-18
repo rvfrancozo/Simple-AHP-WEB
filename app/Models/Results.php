@@ -10,7 +10,9 @@ class Results extends Model
     use HasFactory;
 
     private $objective;
+    private $objectiveid;
     private $criteria;
+    private $node_id;
     private $alternative;
     private $score;
     private $priority;
@@ -19,6 +21,13 @@ class Results extends Model
     private $bestAlternativeScore;
     private $bestCriteriaPriority;
 
+    public function setNodeId($node_id) {
+        $this->node_id = $node_id;
+    }
+    public function getNodeId(){
+        return $this->node_id;
+    }
+    
     public function setBestCriteriaPriority($bestCriteriaPriority) {
         $this->bestCriteriaPriority = $bestCriteriaPriority;
     }
@@ -56,6 +65,14 @@ class Results extends Model
 
     public function getObjective() {
         return $this->objective;
+    }
+
+    public function setObjectiveId($objectiveid) {
+        $this->objectiveid = $objectiveid;
+    }
+
+    public function getObjectiveId() {
+        return $this->objectiveid;
     }
 
     public function setCriteria($criteria) {
