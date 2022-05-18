@@ -59,7 +59,7 @@
             <li>
 		<form method="POST" action="/notes">
 			@csrf
-			<button style="border:none;background-color:transparent" type="submit" class="nav-link">Sobre...</button>
+			<button style="border:none;background-color:transparent" type="submit" class="nav-link">About...</button>
 		</form>
 	</li>
                 <!-- Authentication Links -->
