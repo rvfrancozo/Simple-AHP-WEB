@@ -159,7 +159,7 @@ Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
     {{$j=-1}} -->
         @foreach($j_alternatives as $a)
         <tr align="center">
-            <th>{{$results->getCriteria()[++$j]['descr']}} - {{$results->getNodeId()[$j]['id']}}</th>
+            <th>{{$results->getCriteria()[++$j]['descr']}}</th>
             @foreach($results->getAlternatives() as $x)
             <th>
                 <h6 style="color: blue"><b>{{$x["descr"]}}</b></h6>
