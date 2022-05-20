@@ -11,6 +11,8 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\Testes;
 use App\Http\Controllers\NotesController;
 use App\Http\Controllers\viewusers;
+use App\Http\Controllers\UpdateSingleScore;
+use App\Http\Controllers\UpdateScore;
 
 /*
 |--------------------------------------------------------------------------
@@ -40,7 +42,7 @@ Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name
 Route::get('/AHP', [AHPController::class, 'AHP']);
 
 Route::get('/nodes', [NodesController::class, 'index']);
-Route::get('/error', [NodesController::class, 'error']);
+Route::get('/error', [NotesController::class, 'error']);
 //Route::get('/home', [NodesController::class, 'index']);
 Route::get('/home', function () { return redirect('/'); });
 Route::get('/nodes/{id}/criteria', [NodesController::class, 'criteria']);
@@ -48,13 +50,13 @@ Route::get('/nodes/{id}/alternatives', [NodesController::class, 'alternatives'])
 Route::get('/comparisons/{up}/{id}', [NodesController::class, 'comparisons']);
 Route::post('/formCreateNode/{up}', [NodesController::class, 'formCreateNode']);
 Route::post('/createNode/{up}', [NodesController::class, 'createNode']);
-Route::post('/UpdateScore/{proxy}', [NodesController::class, 'UpdateScore']);
-Route::post('/UpdateSingleScore', [NodesController::class, 'UpdateSingleScore']);
+Route::post('/UpdateScore/{proxy}', [UpdateScore::class, 'UpdateScore']);
+Route::post('/UpdateSingleScore', [UpdateSingleScore::class, 'UpdateSingleScore']);
 Route::get('/node/{id}/remove', [NodesController::class, 'removeNode']);
 Route::get('/nodes/{id}/report', [ReportController::class, 'report']);
 Route::get('/nodes/{id}/NumericalReport', [NumericalReportController::class, 'report']);
 Route::get('/nodes/{id}/HumanReport', [HumanReportController::class, 'report']);
-Route::post('/notes', [NotesController::class, 'notes']);
+Route::get('/notes', [NotesController::class, 'notes']);
 
 
 

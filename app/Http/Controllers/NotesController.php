@@ -10,4 +10,9 @@ class NotesController extends Controller
     {
         return view("objetivos.notes");
     }
+
+    public function error()
+    {
+        return view("objetivos.error");
+    }
 }
