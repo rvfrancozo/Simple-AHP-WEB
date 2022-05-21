@@ -29,19 +29,23 @@ class UpdateScore extends Controller
             if ($s[1] < $s[2]) {
                 $id_node1 = $s[1];
                 $id_node2 = $s[2];
+                $z = $s[3];
+                echo "x";
             }
             if ($s[1] > $s[2]) {
                 $id_node2 = $s[1];
                 $id_node1 = $s[2];
+                $z = 1/$s[3];
+                echo "y";
             }
-            echo $s[0] . " - " . $id_node1 . " - " . $id_node2 . " = " . $s[3] . "<hr>";
+            echo $s[0] . " - " . $id_node1 . " - " . $id_node2 . " = " . $z . "<hr>";
             if ($id_node1 == $proxy) {
                 $x[$s[0]][$id_node1][$id_node2] = $s[3];
             }
             if ($id_node2 == $proxy) {
                 $x[$s[0]][$id_node2][$id_node1] = $s[3];
             }
-            Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $s[3]]);
+            Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $z]);
         }
 
         $up = array_unique($up);
@@ -56,6 +60,6 @@ class UpdateScore extends Controller
                 }
             }
         }
-        //return redirect("/nodes");
+        return redirect("/nodes");
     }
 }
