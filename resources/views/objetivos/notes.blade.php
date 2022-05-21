@@ -35,6 +35,7 @@
     <link href="{{ asset('css/social.css') }}" rel="stylesheet" type="text/css">
     <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
+
 <h3><i>Simple</i> - AHP</h3>
 <p>Este projeto visa disponibilizar uma ferramenta web para tomada de decisão no escopo do AHP.</p>
 <p>Ao contrário do AHP clássico que demanda (n² - n)/2 comparações em cada nível da hierarquia, nossa proposta demanda n-1 comparações onde n é a quantidade de vértices (critérios, sub-critérios ou alternativas) a serem comparados.</p>
@@ -62,59 +63,15 @@
 
 <p>Caso tenha dúvidas ou se desejar contribuir com o projeto, entre em contato com rvfrancozo@gmail.com</p>
 
+<hr>
 
+<p><i>History</i></p>
 
-<!-- <div class="container">
-	<div class="row">
-		<div class="col-md-12">
-			<div class="chart-wrapper">
-				<canvas id="myChart"></canvas>
-			</div>
-		</div>
-	</div>
-</div>
+<b>2022-05-20:</b> <i>Beta version released</i>
+<p>The first full functional version is released. In current version the user can login with his or her google or github account.</p>
 
+<p>The user can also elaborate a decision problem with criteria and alternatives in the scope of the AHP. There are basically two ways to make the judgments: the first way is through the comparisons right after registering the criteria or alternatives, the second way is directly in the judgment matrix through the human report panel.</p>
 
-<script>
-	const ctx = document.getElementById('myChart');
-	const myChart = new Chart(ctx, {
-		type: 'bar',
-		data: {
-			labels: ['Red', 'Blue', 'Yellow', 'Green', 'Purple', 'Orange'],
-			datasets: [{
-				label: '# of Votes',
-				data: [1, 19, 3, 5, 2, 3],
-				backgroundColor: [
-					'rgba(255, 99, 132, 0.2)',
-					'rgba(54, 162, 235, 0.2)',
-					'rgba(255, 206, 86, 0.2)',
-					'rgba(75, 192, 192, 0.2)',
-					'rgba(153, 102, 255, 0.2)',
-					'rgba(255, 159, 64, 0.2)'
-				],
-				borderColor: [
-					'rgba(255, 99, 132, 1)',
-					'rgba(54, 162, 235, 1)',
-					'rgba(255, 206, 86, 1)',
-					'rgba(75, 192, 192, 1)',
-					'rgba(153, 102, 255, 1)',
-					'rgba(255, 159, 64, 1)'
-				],
-				borderWidth: 1
-			}]
-		},
-		options: {
-			responsive: true,
-			maintainAspectRatio: false,
-			scales: {
-				yAxes: [{
-					ticks: {
-						beginAtZero: true
-					}
-				}]
-			}
-		}
-	});
-</script> -->
+<hr><b>2022-04-20:</b> <i>Alpha version released</i><hr>
 
 @stop
