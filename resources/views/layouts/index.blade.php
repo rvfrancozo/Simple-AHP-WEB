@@ -57,7 +57,7 @@
 
             <ul class="navbar-nav ms-auto">
             <li>
-		<form method="POST" action="/notes">
+		<form method="GET" action="/notes">
 			@csrf
 			<button style="border:none;background-color:transparent" type="submit" class="nav-link">About...</button>
 		</form>
