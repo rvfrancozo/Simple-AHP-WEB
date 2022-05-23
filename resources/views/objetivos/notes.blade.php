@@ -67,6 +67,9 @@
 
 <p><i>History</i></p>
 
+<b>2022-05-23:</b> <i>revision of the alternatives judgments released</i>
+<p>Now, in Human report, the decision maker can adjust the alternatives judgments as he wishes.</p>
+
 <b>2022-05-20:</b> <i>Beta version released</i>
 <p>The first full functional version is released. In current version the user can login with his or her google or github account.</p>
 

@@ -43,7 +43,7 @@ class HumanReportController extends Controller
                 ->where('judments.id_node', $id)
 
                 //Campo que seleciona da tabela
-                ->select('node.descr')
+                ->select('node.id','node.descr')
 
                 //Não aceita duplicados
                 ->distinct()
@@ -98,7 +98,7 @@ class HumanReportController extends Controller
             })
                 //busca resultados que estejam dentro do array $v
                 ->whereIn('judments.id_node', $v)
-                ->select('node.id', 'node.descr')
+                ->select('node.id','node.descr')
                 ->distinct()
                 ->get()
         );

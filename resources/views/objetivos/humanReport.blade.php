@@ -54,7 +54,7 @@
                     @foreach($results->getCriteria() as $q)
 
                     <th scope="col">
-                        <h6 style="color: blue"><b>{{$q["descr"]}}</b></h6>
+                        <h6 style="color: red"><b>{{$q["descr"]}}</b></h6>
                     </th>
 
                     @endforeach
@@ -76,14 +76,14 @@
 
                 <tr align="center">
                     <td scope="col">
-                        <h6 style="color: red"><b>{{$results->getCriteria()[++$i]["descr"]}}</b></h6>
+                        <h6 style="color: blue"><b>{{$results->getCriteria()[++$i]["descr"]}}</b></h6>
                     </td>
                     <!-- {{$j = -1}} -->
                     @foreach($c as $jc)
-                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$results->getCriteria()[$i]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
+                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$i}} - {{$j}} - {{$results->getCriteria()[++$j]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
                         @elseif($jc > 1)
                         <td scope="col">
-                            <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$results->getCriteria()[++$j]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round($jc,3)}}</b></a>
+                            <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$i}} - {{$j}} - {{$results->getCriteria()[$i]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round($jc,3)}}</b></a>
                         </td>
                         @else
                         <td scope="col">
@@ -105,23 +105,23 @@
                                     <form method="POST" action="/UpdateSingleScore">
                                         @csrf
                                         <select id="newjudment" name="newjudment">
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/7}}">1/7 {{$results->getCriteria()[$j]['descr']}} is 7x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/6}}">1/6 {{$results->getCriteria()[$j]['descr']}} is 6x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/5}}">1/5 {{$results->getCriteria()[$j]['descr']}} is 5x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/4}}">1/4 {{$results->getCriteria()[$j]['descr']}} is 4x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/3}}">1/3 {{$results->getCriteria()[$j]['descr']}} is 3x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/2}}">1/2 {{$results->getCriteria()[$j]['descr']}} is 2x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1}}">1 {{$results->getCriteria()[$i]['descr']}} is indifferent than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{2}}">2 {{$results->getCriteria()[$i]['descr']}} is 2x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{3}}">3 {{$results->getCriteria()[$i]['descr']}} is 3x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{4}}">4 {{$results->getCriteria()[$i]['descr']}} is 4x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{5}}">5 {{$results->getCriteria()[$i]['descr']}} is 5x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{6}}">6 {{$results->getCriteria()[$i]['descr']}} is 6x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{7}}">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                            <option value="{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{7}}">1/7 {{$results->getCriteria()[$j]['descr']}} is 7x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{6}}">1/6 {{$results->getCriteria()[$j]['descr']}} is 6x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{5}}">1/5 {{$results->getCriteria()[$j]['descr']}} is 5x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{4}}">1/4 {{$results->getCriteria()[$j]['descr']}} is 4x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{3}}">1/3 {{$results->getCriteria()[$j]['descr']}} is 3x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{2}}">1/2 {{$results->getCriteria()[$j]['descr']}} is 2x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1}}">1 {{$results->getCriteria()[$i]['descr']}} is indifferent than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/2}}">2 {{$results->getCriteria()[$i]['descr']}} is 2x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/3}}">3 {{$results->getCriteria()[$i]['descr']}} is 3x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/4}}">4 {{$results->getCriteria()[$i]['descr']}} is 4x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/5}}">5 {{$results->getCriteria()[$i]['descr']}} is 5x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/6}}">6 {{$results->getCriteria()[$i]['descr']}} is 6x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/7}}">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                            <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                         </select>
                                         <div class="modal-footer">
                                             <div class="btn-group">
@@ -138,12 +138,12 @@
                 </tr>@endforeach
             </tbody>
         </table>
-<div align="center" ><?php
-    $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getObjectiveId(), 0);
-    $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
-?>
-Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
-</div>
+        <div align="center"><?php
+                            $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getObjectiveId(), 0);
+                            $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
+                            ?>
+            Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
+        </div>
 
     </div>
 </div>
@@ -159,50 +159,114 @@ Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
     {{$j=-1}} -->
         @foreach($j_alternatives as $a)
         <tr align="center">
-            <th>{{$results->getCriteria()[++$j]['descr']}}</th>
+            <th>
+                <h6 id="{{$results->getCriteria()[$j+1]['id']}}">
+                    {{$results->getCriteria()[++$j]['descr']}}
+                </h6>
+            </th>
             @foreach($results->getAlternatives() as $x)
             <th>
-                <h6 style="color: blue"><b>{{$x["descr"]}}</b></h6>
+                <h6 style="color: red"><b>{{$x["descr"]}}</b></h6>
             </th>
             @endforeach
         </tr>
         @foreach($a as $b)
         <tr align="center">
             <td>
-                <h6 style="color: red"><b>{{$results->getAlternatives()[++$i]["descr"]}}</b></h6>
+                <h6 style="color: blue"><b>{{$results->getAlternatives()[++$i]["descr"]}}</b></h6>
             </td>
             <!-- {{$k = -1}} -->
             @foreach($b as $c)
             @if($c < 1) <td>
-                <a href="" style="color: red" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[$i]['descr']}} is {{round(pow($c,-1),0)}}x most important/relevant than {{$results->getAlternatives()[++$k]['descr']}}">
-                    <b>{{ round(pow($c,-1),0)}}</b>
+                <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: red" title="In -{{$results->getCriteria()[$j]['descr']}}- {{$results->getAlternatives()[++$k]['descr']}} is {{round(pow($c,-1),0)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
+                    <b>
+                        <!--{{$aa = $i}}-->
+                        {{ round(pow($c,-1),0)}}
+                    </b>
                 </a>
                 </td>
                 @elseif($c > 1)
                 <td>
-                    <a href="" style="color: blue" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[++$k]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
-                        <b>{{round($c,2)}}</b>
+                    <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: blue" title="In -{{$results->getCriteria()[$j]['descr']}}- {{$results->getAlternatives()[$i]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[++$k]['descr']}}">
+                        <b>
+                            {{round($c,2)}}
+                        </b>
                     </a>
                 </td>
                 @else
                 <td>
-                    <h6 style="color: black"><b>{{round($c,2)}}</b></h6><!-- {{ ++$k }} -->
+                    <h6 style="color: black">
+                        <b>
+                            {{round($c,2)}}
+                        </b>
+                    </h6><!-- {{ ++$k }} -->
                 </td>
                 @endif
 
+                <!--modal here-->
+                <div class="modal" id="change_{{$j}}_{{$i}}_{{$k}}">
+                    <div class="modal-dialog">
+                        <div class="modal-content">
+                            <div class="modal-header">
+                                <h4 class="modal-title">Update Judment #{{$i}} _{{$j}}</h4>
+                                <!--<button type="button" class="close" data-dismiss="modal"></button>-->
+                            </div>
+                            <div class="modal-body">
+                                Update comparison in <i>{{$results->getCriteria()[$j]['descr']}}</i> between:
+                                <strong>{{$results->getAlternatives()[$i]['descr']}} X {{$results->getAlternatives()[$k]['descr']}}</strong>
+                            </div>
+                            <form method="POST" action="/UpdateSingleScore">
+                                @csrf
+                                <select id="newjudment" name="newjudment">
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{7}}">1/7 {{$results->getCriteria()[$j]['descr']}} is 7x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{6}}">1/6 {{$results->getCriteria()[$j]['descr']}} is 6x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{5}}">1/5 {{$results->getCriteria()[$j]['descr']}} is 5x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{4}}">1/4 {{$results->getCriteria()[$j]['descr']}} is 4x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{3}}">1/3 {{$results->getCriteria()[$j]['descr']}} is 3x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{2}}">1/2 {{$results->getCriteria()[$j]['descr']}} is 2x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1}}">1 {{$results->getCriteria()[$i]['descr']}} is indifferent than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/2}}">2 {{$results->getCriteria()[$i]['descr']}} is 2x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/3}}">3 {{$results->getCriteria()[$i]['descr']}} is 3x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/4}}">4 {{$results->getCriteria()[$i]['descr']}} is 4x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/5}}">5 {{$results->getCriteria()[$i]['descr']}} is 5x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/6}}">6 {{$results->getCriteria()[$i]['descr']}} is 6x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/7}}">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                    <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
+                                </select>
+                                <div class="modal-footer">
+                                    <div class="btn-group">
+                                        <button type="submit" class="btn btn-primary">Save</button>
+                                        <button type="button" class="btn btn-danger" data-dismiss="modal">Cancel</button>
+                                        <!--<a class="btn btn-danger" href="#">Remove</a>-->
+                                    </div>
+                                </div>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- end modal -->
+
+
+
                 @endforeach
         </tr>
-        
+
         @endforeach
         <!-- {{$i=-1}} -->
-<tr><td align="center" colspan="{{$k+2}}">
-<?php
-    $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getNodeId()[$j]['id'], 0);
-    $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
-?>
-Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%  
-<hr color="black">  
-</td></tr>
+        <tr>
+            <td align="center" colspan="{{$k+2}}">
+                <?php
+                $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getNodeId()[$j]['id'], 0);
+                $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
+                ?>
+                Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
+                <hr color="black">
+            </td>
+        </tr>
         @endforeach
 
 

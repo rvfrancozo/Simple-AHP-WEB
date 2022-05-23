@@ -41,7 +41,6 @@ $score = array(1/9, 1/8, 1/7, 1/6, 1/5, 1/4, 1/3, 1/2);
     @csrf
     @foreach($goal as $g)
     <hr><b>In respect to <i>{{ $g->descr }}</i></b>
-    <hr>
 
     <table class="table">
         <tbody>
@@ -76,7 +75,7 @@ $score = array(1/9, 1/8, 1/7, 1/6, 1/5, 1/4, 1/3, 1/2);
     </table>
 
     @endforeach
-    <hr>
+    <!--<hr>-->
     <div class="btn-group">
         <button type="submit" class="btn btn-primary">Save</button>
         <a class="btn btn-danger" href="/nodes">Cancel</a>
