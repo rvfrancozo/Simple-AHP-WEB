@@ -1,5 +1,4 @@
 <?php
-//teste
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
@@ -42,7 +41,8 @@ class AHPController extends Controller {
 			for($j = 0; $j < $dim; $j++) {
 				$sum_line += $n_matrix[$i][$j];
 			}
-			array_push( $priority, round($sum_line/$dim,3));
+			//array_push( $priority, round($sum_line/$dim,3));
+			array_push( $priority, $sum_line/$dim);
 		}
 		#print_r(array_values($priority));
 		return($priority);
@@ -83,7 +83,8 @@ class AHPController extends Controller {
 		for($i = 0; $i < $a; $i++) {
 			for($j = 0; $j < $c; $j++) {
 				$final[$i] += AHPController::GetPriority($j_alternatives[$j])[$i] * AHPController::GetPriority($j_criteria)[$j];
-				$final[$i] = round($final[$i],3);
+				//$final[$i] = round($final[$i],3);
+				$final[$i] = $final[$i];
 			}
 		}
 

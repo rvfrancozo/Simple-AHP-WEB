@@ -95,7 +95,7 @@
 	
 
 <hr>
-The most relevant Alternative for the decision problem {{ $results->getObjective() }} is:<b> {{$results->getBestAlternative()}}</b> with {{$results->getBestAlternativeScore()*100}}% of priority.
+The most relevant Alternative for the decision problem {{ $results->getObjective() }} is:<b> {{$results->getBestAlternative()}}</b> with {{round($results->getBestAlternativeScore()*100,2)}}% of priority.
 <hr>
 
 <div class="container">
@@ -109,7 +109,7 @@ The most relevant Alternative for the decision problem {{ $results->getObjective
 </div>
 
 <hr>
-The -- most relevant Criterion for the decision problem {{ $results->getObjective() }} is: <b>{{$results->getBestCriteria()}} </b> with {{$results->getBestCriteriaPriority()*100}}% of priority.
+The -- most relevant Criterion for the decision problem {{ $results->getObjective() }} is: <b>{{$results->getBestCriteria()}} </b> with {{round($results->getBestCriteriaPriority()*100,2)}}% of priority.
 	
 <hr>	
 <div class="container">
@@ -142,7 +142,7 @@ The -- most relevant Criterion for the decision problem {{ $results->getObjectiv
 					label: '% of priority of alternatives for the objective: {{$results->getObjective()}}',
 					data: [
 						@foreach($results->getPriority() as $s)
-						{{$s*100}},
+						{{round($s*100,2)}},
 						@endforeach
 					],
 					backgroundColor: [
@@ -227,7 +227,7 @@ The -- most relevant Criterion for the decision problem {{ $results->getObjectiv
 					label: '% of priority of alternatives for the objective: {{$results->getObjective()}}',
 					data: [
 						@foreach($results->getScore() as $s)
-						'{{$s*100}}',
+						'{{round($s*100,2)}}',
 						@endforeach
 					],
 					backgroundColor: [
