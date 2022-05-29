@@ -67,6 +67,9 @@
 
 <p><i>History</i></p>
 
+<b>2022-05-29:</b> <i>Group decision with AIP is working</i>
+<p>Now it is possible to make group decision in the scope in AIP. At this point it is not yet possible to define weights for the decision-makers so that everyone has equal importance in the decision.</p>
+
 <b>2022-05-23:</b> <i>revision of the alternatives judgments released</i>
 <p>Now, in Human report, the decision maker can adjust the alternatives judgments as he wishes.</p>
 
