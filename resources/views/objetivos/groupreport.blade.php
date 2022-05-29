@@ -29,10 +29,7 @@
 
 </ul>
 @stop
-
-
 @section ('conteudo')
- 
 <ul class="nav nav-tabs">
 <li class="nav-item">
         <a class="nav-link " href="report">My results</a>
@@ -49,7 +46,7 @@
 
 <div class="container">
 
-	<h3> <class="lead"> Objective: {{ $results->getObjective() }} </h3>
+	<h3> <class="lead">Group results for the objective: {{ $results->getObjective() }} </h3>
 	
 </div>
 

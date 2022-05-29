@@ -92,7 +92,6 @@
                                                      document.getElementById('logout-form').submit();">
                             {{ __('Logout') }}
                         </a>
-
                         <form id="logout-form" action="{{ route('logout') }}" method="POST" class="d-none">
                             @csrf
                         </form>
@@ -100,11 +99,9 @@
                 </li>
                 @endguest
             </ul>
-
         </div>
     </nav>
-
-    <div class="container" style="margin-top:80px">
+    <div class="container" style="margin-top:10px">
         @yield('conteudo')
     </div>
 
