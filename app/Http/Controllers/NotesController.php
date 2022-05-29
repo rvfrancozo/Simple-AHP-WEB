@@ -15,4 +15,9 @@ class NotesController extends Controller
     {
         return view("objetivos.error");
     }
+
+    public function erroruser()
+    {
+        return view("objetivos.erroruser");
+    }
 }

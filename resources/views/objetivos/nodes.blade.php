@@ -40,7 +40,7 @@
 		<thead>
 			<tr>
 				<th>#</th>
-				<th>Decision Problems</th>
+				<th>My Decision Problems</th>
 				<th>View</th>
 				<th>Operations</th>
 			</tr>
@@ -63,7 +63,7 @@
 				<td>
 					<div class="btn-group">
 						<a class="btn btn-primary btn-sm" href="/nodes/{{$o->id}}/report">Report <i class='fas fa-poll' style='font-size:12px;color:white'></i></a>
-						&nbsp;<a class="btn btn-primary btn-sm" href="#">Group <i class='fas fa-users' style='font-size:12px;color:white'></i> </a>
+						&nbsp;<a class="btn btn-primary btn-sm" href="/group/{{$o->id}}/dm">Group <i class='fas fa-users' style='font-size:12px;color:white'></i> </a>
 						&nbsp;<button type="button" class="btn btn-sm btn-danger" data-toggle="modal" data-target="#excluir_{{$o->id}}" disabled>Remove</button>
 					</div>
 					<div class="modal" id="excluir_{{$o->id}}">
@@ -94,7 +94,35 @@
 		</tbody>
 	</table>
 
+	<hr>
+
+	<table class="table table-bordered table-striped table-hover">
+		<thead>
+			<tr>
+				<th>#</th>
+				<th>My Team Decision Problems</th>
+				<th>Actions</th>
+			</tr>
+		</thead>
+		<tbody>
+			@foreach($team as $o)
+			<tr>
+				<td>{{ ++$x }}</td>
+				<td>
+					{{ $o['descr'] }}
+				</td>
+				<td>
+					<div class="btn-group">
+						<a href="/nodes/{{ $o['id'] }}/criteria" class="btn btn-sm btn-primary" data-toggle="tooltip" title="">Criteria</a>
+						&nbsp;<a href="/nodes/{{ $o['id'] }}/alternatives" class="btn btn-sm btn-primary" data-toggle="tooltip" title="teste">Alternatives</a>
+						&nbsp;<a class="btn btn-primary btn-sm" href="/nodes/{{$o->id}}/groupreport">Report <i class='fas fa-poll' style='font-size:12px;color:white'></i></a>
+					</div>
+				</td>
+			</tr>
 
 
+			@endforeach
 
+		</tbody>
+	</table>
 	@stop

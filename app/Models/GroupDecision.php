@@ -11,6 +11,6 @@ class GroupDecision extends Model
 
     protected $table = 'groupdecision';
 
-    protected $fillable = ['id', 'node', 'email'];
+    protected $fillable = ['id', 'node', 'email', 'weight'];
 
 }

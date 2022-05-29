@@ -21,8 +21,8 @@ class NumericalReportController extends Controller
         //Criamos um objeto do modelo de resultados 
         $results = new Results();
 
-        $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0);
-        $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0);
+        $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, null);
+        $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, null);
 
         $query = Node::find($id); //Busca pelo id da tabela node
         

@@ -32,16 +32,16 @@
 
 @section ('conteudo')
 <ul class="nav nav-tabs">
-  <li class="nav-item">
-    <a class="nav-link " href="report">Graphical results</a>
-  </li>
-  <li class="nav-item">
-    <a class="nav-link" href="NumericalReport">Numerical results</a>
-  </li>
+<li class="nav-item">
+        <a class="nav-link " href="report">My results</a>
+    </li>
+    <li class="nav-item">
+        <a class="nav-link" href="groupreport">Group results</a>
+    </li>
 
-  <li class="nav-item">
-    <a class="nav-link" href="HumanReport">Human results</a>
-  </li>
+    <li class="nav-item">
+        <a class="nav-link" href="HumanReport">Numerical results</a>
+    </li>
   
 </ul>
 <div class="card">

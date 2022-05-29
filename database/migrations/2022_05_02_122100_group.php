@@ -17,6 +17,7 @@ return new class extends Migration
             $table->id();
             $table->integer('node');
             $table->string('email');
+            $table->double('weight')->default(1);
             $table->timestamps();
         });
     }

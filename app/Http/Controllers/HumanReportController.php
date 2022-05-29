@@ -16,13 +16,13 @@ class HumanReportController extends Controller
     // {
     //     echo "santo fregues";
     // }
-    public function Report($id)
+    public function report($id)
     {
         //Criamos um objeto do modelo de resultados 
         $results = new Results();
 
-        $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0);
-        $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0);
+        $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, null);
+        $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, null);
 
         $query = Node::find($id); //Busca pelo id da tabela node
 
@@ -43,7 +43,7 @@ class HumanReportController extends Controller
                 ->where('judments.id_node', $id)
 
                 //Campo que seleciona da tabela
-                ->select('node.id','node.descr')
+                ->select('node.id', 'node.descr')
 
                 //Não aceita duplicados
                 ->distinct()
@@ -98,7 +98,7 @@ class HumanReportController extends Controller
             })
                 //busca resultados que estejam dentro do array $v
                 ->whereIn('judments.id_node', $v)
-                ->select('node.id','node.descr')
+                ->select('node.id', 'node.descr')
                 ->distinct()
                 ->get()
         );
@@ -135,46 +135,51 @@ class HumanReportController extends Controller
             }
         }
 
-        //dd($j_criteria);
-        //dd($j_alternatives)
+        // echo $results->getNodeId()[1]['id'];
+        // echo $results->getNodeId()[1]['id'];
+        // echo $results->getCriteria()[1]['descr'];
+        // echo $results->getCriteria()[1]['descr'];
 
-        return view("objetivos.humanReport")->with('results', $results)
+        // dd($results->getCriteria());
+
+        return view("objetivos.humanReport")
+            ->with('results', $results)
             ->with('j_criteria', $j_criteria)
             ->with('j_alternatives', $j_alternatives);
 
         //AHPController::Normalize($j_criteria);
 
-        AHPController::CheckConsistency($j_criteria);
+        // AHPController::CheckConsistency($j_criteria);
 
-        echo "<hr><b>Matrix of Criteria Judments:</b><br>"; //Mostra os critérios do objetivo
-        foreach ($j_criteria as $c) {
-            foreach ($c as $score) {
-                printf("%.2f&nbsp;&nbsp;&nbsp;&nbsp;", $score);
-            }
-            echo "<br>";
-        }
+        // echo "<hr><b>Matrix of Criteria Judments:</b><br>"; //Mostra os critérios do objetivo
+        // foreach ($j_criteria as $c) {
+        //     foreach ($c as $score) {
+        //         printf("%.2f&nbsp;&nbsp;&nbsp;&nbsp;", $score);
+        //     }
+        //     echo "<br>";
+        // }
 
-        echo "<hr><b>Matrix of Alternatives Judments:</b><br>";
+        // echo "<hr><b>Matrix of Alternatives Judments:</b><br>";
 
-        print_r($j_alternatives);
+        // print_r($j_alternatives);
 
-        echo "<hr><b>Normalized Matrix of Criteria Judments:</b><br>";
-        print_r(AHPController::Normalize($j_criteria));
+        // echo "<hr><b>Normalized Matrix of Criteria Judments:</b><br>";
+        // print_r(AHPController::Normalize($j_criteria));
 
-        for ($i = 0; $i < count($j_alternatives); $i++) {
-            echo "<hr><b>Normalized Matrix of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
-            print_r(AHPController::Normalize($j_alternatives[$i]));
-        }
+        // for ($i = 0; $i < count($j_alternatives); $i++) {
+        //     echo "<hr><b>Normalized Matrix of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
+        //     print_r(AHPController::Normalize($j_alternatives[$i]));
+        // }
 
-        echo "<hr><b>Consistency of Criteria Judments:</b><br>" .
-            AHPController::CheckConsistency($j_criteria);
+        // echo "<hr><b>Consistency of Criteria Judments:</b><br>" .
+        //     AHPController::CheckConsistency($j_criteria);
 
-        for ($i = 0; $i < count($j_alternatives); $i++) {
-            echo "<hr><b>Consistency of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
-            echo AHPController::CheckConsistency($j_alternatives[$i]);
-        }
+        // for ($i = 0; $i < count($j_alternatives); $i++) {
+        //     echo "<hr><b>Consistency of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
+        //     echo AHPController::CheckConsistency($j_alternatives[$i]);
+        // }
 
-        echo "<hr><b>Final Priorities:</b><br>";
-        print_r(AHPController::FinalPriority($j_criteria, $j_alternatives));
+        // echo "<hr><b>Final Priorities:</b><br>";
+        // print_r(AHPController::FinalPriority($j_criteria, $j_alternatives));
     }
 }

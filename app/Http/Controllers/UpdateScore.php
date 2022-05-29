@@ -45,7 +45,7 @@ class UpdateScore extends Controller
             if ($id_node2 == $proxy) {
                 $x[$s[0]][$id_node2][$id_node1] = $s[3];
             }
-            Judments::where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $z]);
+            Judments::where('user_email',Auth::user()->email)->where('id_node', $s[0])->where('id_node1', $id_node1)->where('id_node2', $id_node2)->update(['score' => $z]);
         }
 
         $up = array_unique($up);
@@ -56,7 +56,7 @@ class UpdateScore extends Controller
                 for ($j = $i + 1; $j < count($n); $j++) {
                     $z = 1 / ($x[$p][$proxy][$n[$i]] / $x[$p][$proxy][$n[$j]]);
                     echo ":" . $p . " - " . $n[$i] . " - " . $n[$j] . " == " . $z . "<br>";
-                    Judments::where('id_node', $p)->where('id_node1', $n[$i])->where('id_node2', $n[$j])->update(['score' => $z]);
+                    Judments::where('user_email',Auth::user()->email)->where('id_node', $p)->where('id_node1', $n[$i])->where('id_node2', $n[$j])->update(['score' => $z]);
                 }
             }
         }

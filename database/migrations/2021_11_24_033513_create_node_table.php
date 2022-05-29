@@ -15,7 +15,7 @@ class CreateNodeTable extends Migration
     {
         Schema::create('node', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->string('user_email', 150);
             $table->integer('level');
             $table->string('descr', 150);

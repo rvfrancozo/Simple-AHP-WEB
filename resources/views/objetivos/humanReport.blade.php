@@ -33,14 +33,14 @@
 @section ('conteudo')
 <ul class="nav nav-tabs">
     <li class="nav-item">
-        <a class="nav-link " href="report">Graphical results</a>
+        <a class="nav-link " href="report">My results</a>
     </li>
     <li class="nav-item">
-        <a class="nav-link" href="NumericalReport">Numerical results</a>
+        <a class="nav-link" href="groupreport">Group results</a>
     </li>
 
     <li class="nav-item">
-        <a class="nav-link" href="HumanReport">Human results</a>
+        <a class="nav-link" href="HumanReport">Numerical results</a>
     </li>
 
 </ul>
@@ -103,7 +103,7 @@
                                         <strong>{{$results->getCriteria()[$i]['descr']}} X {{$results->getCriteria()[$j]['descr']}}</strong>
                                     </div>
                                     <form method="POST" action="/UpdateSingleScore">
-                                        @csrf
+                                        @csrf<!--
                                         <select id="newjudment" name="newjudment">
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
@@ -122,7 +122,7 @@
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/7}}">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                        </select>
+                                        </select>-->
                                         <div class="modal-footer">
                                             <div class="btn-group">
                                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -139,7 +139,7 @@
             </tbody>
         </table>
         <div align="center"><?php
-                            $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getObjectiveId(), 0);
+                            $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getObjectiveId(), 0, null);
                             $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
                             ?>
             Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
@@ -260,7 +260,7 @@
         <tr>
             <td align="center" colspan="{{$k+2}}">
                 <?php
-                $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getNodeId()[$j]['id'], 0);
+                $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getNodeId()[$j]['id'], 0, null);
                 $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
                 ?>
                 Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%

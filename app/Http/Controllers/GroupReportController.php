@@ -10,26 +10,26 @@ use Illuminate\Http\Request;
 use App\Http\Controllers\AHPController;
 use Illuminate\Support\Facades\Auth;
 
+// private $objective;
+// private $objectiveid;
+// private $criteria;
+// private $node_id;
+// private $alternative;
+// private $score;
+// private $priority;
+// private $bestAlternative;
+// private $bestCriteria;
+// private $bestAlternativeScore;
+// private $bestCriteriaPriority;
 
-class ReportController extends Controller
+class GroupReportController extends Controller
 {
-
     public function report($id)
     {
-
-        //Criamos um objeto do modelo de resultados 
         $results = new Results();
-
-        $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, null);
-        $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, null);
-
-        if(count($j_criteria) == 0 || count($j_alternatives) == 0) {
-            return redirect('/error'); //fazer uma view de erro
-        }
 
         $query = Node::find($id); //Busca pelo id da tabela node
 
-        //Adicionamos o objetivo ao objeto de resultados
         $results->setObjective($query->descr);
 
         $results->setCriteria(
@@ -45,7 +45,7 @@ class ReportController extends Controller
                 ->where('judments.id_node', $id)
 
                 //Apenas os julgamentos do usuário logado
-                ->where('judments.user_email', Auth::user()->email)
+                //->where('judments.user_id', Auth::user()->id)
 
                 //Campo que seleciona da tabela
                 //necessário consultar o ID para ordenar por ele.
@@ -65,7 +65,7 @@ class ReportController extends Controller
         })
             ->where('judments.id_node', $id)
             //Apenas os julgamentos do usuário logado
-            ->where('judments.user_email', Auth::user()->email)
+            //->where('judments.user_id', Auth::user()->id)
             ->select('node.id')
             ->distinct()
             ->get();
@@ -89,19 +89,11 @@ class ReportController extends Controller
                 ->get()
         );
 
-        //Pega os scores
-        $results->setScore(AHPController::FinalPriority($j_criteria, $j_alternatives));
 
-        $results->setPriority(AHPController::GetPriority($j_criteria));
+        /*Aqui vai ser para agregar os resultados */
+        $results->setPriority(AHPController::GetGroupPriority($id));
 
-
-        // foreach($results->getPriority() as $pf) {
-        //     if($pf > $temp){
-        //         $temp = $pf;
-        //     }
-        // }
-
-        //$temp = 10
+        $results->setScore(AHPController::GroupFinalPriority($id));
 
         $results->setBestCriteriaPriority(0);
         for ($i = 0; $i < count($results->getPriority()); $i++) {
@@ -119,55 +111,13 @@ class ReportController extends Controller
                 $results->setBestAlternativeScore($results->getScore()[$i]);
                 $results->setBestAlternative($results->getAlternatives()[$i]->descr);
             }
-        }
+        }        
 
-        return view("objetivos.report")->with('results', $results);
+        //echo Auth::user()->email;
 
+        //dd($results->getCriteria());
 
-
-
-
-
-        //AHPController::Normalize($j_criteria);
-
-        echo "<hr><b>Criteria priorities:</b><br>"; //Mostra as prioridades das alternativas
-        print_r(AHPController::GetPriority($j_criteria));
-
-        echo "<hr><b>Matrix of Criteria Judments:</b><br>"; //Mostra os critérios do objetivo
-        foreach ($j_criteria as $c) {
-            foreach ($c as $score) {
-                printf("%.2f&nbsp;&nbsp;&nbsp;&nbsp;", $score);
-            }
-            echo "<br>";
-        }
-        echo "<hr><b>Normalized Matrix of Criteria Judments:</b><br>";
-        $n_criteria = (AHPController::Normalize($j_criteria));
-        foreach ($n_criteria as $c) {
-            foreach ($c as $score) {
-                printf("%.2f&nbsp;&nbsp;&nbsp;&nbsp;", $score);
-            }
-            echo "<br>";
-        }
-
-        echo "<hr><b>Matrix of Alternatives Judments:</b><br>";
-        //dd($j_alternatives);
-
-
-
-        for ($i = 0; $i < count($j_alternatives); $i++) {
-            echo "<hr><b>Normalized Matrix of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
-            print_r(AHPController::Normalize($j_alternatives[$i]));
-        }
-
-        echo "<hr><b>Inconsistency of Criteria Judments:</b><br>" .
-            round(AHPController::CheckConsistency($j_criteria), 1);
-
-        for ($i = 0; $i < count($j_alternatives); $i++) {
-            echo "<hr><b>Inconsistency of Alternatives Judments for Criterion " . ($i + 1) . ":</b><br>";
-            echo round(AHPController::CheckConsistency($j_alternatives[$i]), 1);
-        }
-
-        echo "<hr><b>Final Priorities:</b><br>";
-        print_r(AHPController::FinalPriority($j_criteria, $j_alternatives));
+        return view("objetivos.groupreport")->with('results', $results);        
+        
     }
 }

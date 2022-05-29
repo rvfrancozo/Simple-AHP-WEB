@@ -8,6 +8,7 @@ use App\Models\Judments;
 use App\Models\Score;
 use Illuminate\Http\Request;
 use App\Http\Controllers\AHPController;
+use App\Models\GroupDecision;
 use Illuminate\Support\Facades\Auth;
 
 class NodesController extends Controller
@@ -16,7 +17,15 @@ class NodesController extends Controller
     public function index()
     {
         $objectives = Node::get()->where('level', 0)->where('user_id',Auth::user()->id);
-        return view("objetivos.nodes")->with('objectives', $objectives);
+        //$team = Node::get()->where('level', 0)->where('user_id',Auth::user()->email);
+        $team = GroupDecision::get()->where('email',Auth::user()->email);
+        $tid = array();
+        foreach($team as $t) {
+            array_push($tid, $t->node);
+        }
+        $team = Node::get()->whereIn('id', $tid);
+        
+        return view("objetivos.nodes")->with('objectives', $objectives)->with('team',$team);
     }
 
     public function criteria($id)

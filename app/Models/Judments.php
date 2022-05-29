@@ -11,5 +11,5 @@ class Judments extends Model
 
     protected $table = 'judments';
 
-    protected $fillable = ['id', 'id_node', 'id_node1', 'id_node2', 'score', 'user_id'];
+    protected $fillable = ['id', 'id_node', 'id_node1', 'id_node2', 'score', 'user_id', 'user_email'];
 }

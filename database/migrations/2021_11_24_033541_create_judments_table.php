@@ -15,7 +15,7 @@ class CreateJudmentsTable extends Migration
     {
         Schema::create('judments', function (Blueprint $table) {
             $table->id();
-            $table->integer('user_id');
+            $table->integer('user_id')->nullable();
             $table->string('user_email', 150);
             $table->integer('id_node');
             $table->integer('id_node1');

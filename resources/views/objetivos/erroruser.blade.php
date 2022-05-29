@@ -1,3 +1,4 @@
+
 @extends ('layouts.index')
 
 @section('menu')
@@ -36,7 +37,7 @@
     <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css">
     <link rel="stylesheet" href="/css/bootstrap.min.css">
 <h6 class="alert-danger"><i><b>ERROR!</b></i></h6>
-<p>You must register criteria and alternatives in order to be able to view the report or add decision-makers.</p>
+<p>User already in this decision problem.</p>
 
 <!-- <div class="container">
 	<div class="row">
