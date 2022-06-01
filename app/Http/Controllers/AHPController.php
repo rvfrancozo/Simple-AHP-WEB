@@ -93,7 +93,9 @@ class AHPController extends Controller
 	//Return a float with the consistency of the judments matrix
 	public static function CheckConsistency($julgamentos)
 	{
-		$saaty = array(0, 0, 0.00001, 0.5247, 0.8816, 1.1086, 1.2479, 1.3417, 1.4057, 1.4499, 1.4854);
+		//$saaty = array(0, 0, 0.00001, 0.5247, 0.8816, 1.1086, 1.2479, 1.3417, 1.4057, 1.4499, 1.4854, 1.51, 1.48, 1.56, 1.57, 1.59);
+		//Saaty 1980 p. 34
+		$saaty = array(0, 0, 0.00001, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59);
 		$priority = AHPController::GetPriority($julgamentos);
 		$dim = count($julgamentos);
 

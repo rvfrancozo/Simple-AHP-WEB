@@ -80,10 +80,10 @@
                     </td>
                     <!-- {{$j = -1}} -->
                     @foreach($c as $jc)
-                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$i}} - {{$j}} - {{$results->getCriteria()[++$j]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
+                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$results->getCriteria()[++$j]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
                         @elseif($jc > 1)
                         <td scope="col">
-                            <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$i}} - {{$j}} - {{$results->getCriteria()[$i]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round($jc,3)}}</b></a>
+                            <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$results->getCriteria()[$i]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round($jc,3)}}</b></a>
                         </td>
                         @else
                         <td scope="col">
