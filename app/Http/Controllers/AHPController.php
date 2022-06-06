@@ -115,6 +115,56 @@ class AHPController extends Controller
 		return $cr;
 	}
 
+	public static function GetConsistencyIndex($julgamentos)
+	{
+		//$saaty = array(0, 0, 0.00001, 0.5247, 0.8816, 1.1086, 1.2479, 1.3417, 1.4057, 1.4499, 1.4854, 1.51, 1.48, 1.56, 1.57, 1.59);
+		//Saaty 1980 p. 34
+		$saaty = array(0, 0, 0.00001, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59);
+		$priority = AHPController::GetPriority($julgamentos);
+		$dim = count($julgamentos);
+
+		$vector = array();
+		for ($i = 0; $i < $dim; $i++) {
+			$tmp = 0;
+			for ($j = 0; $j < $dim; $j++) {
+				$tmp = $tmp + ($julgamentos[$i][$j] * $priority[$j]);
+			}
+			array_push($vector, $tmp / $priority[$i]);
+		}
+		$tmp = array_sum($vector) / count($vector);
+
+		$ci = ($tmp - $dim) / ($dim - 1);
+		$cr = $ci / $saaty[$dim];
+
+		return $ci;
+	}
+
+	public static function GetLambdaMax($julgamentos)
+	{
+		//$saaty = array(0, 0, 0.00001, 0.5247, 0.8816, 1.1086, 1.2479, 1.3417, 1.4057, 1.4499, 1.4854, 1.51, 1.48, 1.56, 1.57, 1.59);
+		//Saaty 1980 p. 34
+		$saaty = array(0, 0, 0.00001, 0.58, 0.90, 1.12, 1.24, 1.32, 1.41, 1.45, 1.49, 1.51, 1.48, 1.56, 1.57, 1.59);
+		$priority = AHPController::GetPriority($julgamentos);
+		$dim = count($julgamentos);
+
+		$vector = array();
+		for ($i = 0; $i < $dim; $i++) {
+			$tmp = 0;
+			for ($j = 0; $j < $dim; $j++) {
+				$tmp = $tmp + ($julgamentos[$i][$j] * $priority[$j]);
+			}
+			array_push($vector, $tmp / $priority[$i]);
+		}
+		$tmp = array_sum($vector) / count($vector);
+
+		$ci = ($tmp - $dim) / ($dim - 1);
+		$cr = $ci / $saaty[$dim];
+		$lambda = $tmp;
+
+		return $lambda;
+	}
+
+
 	//Given a alternatives and criteria judments matrix return the final priorities
 	//from alternatives
 	public static function FinalPriority($j_criteria, $j_alternatives)
@@ -218,7 +268,7 @@ class AHPController extends Controller
 			}
 		}
 		return ($criteria);
-	}
+	}	
 
 	public static function GetAlternativesJudmentsMatrix($objective, $level, $user)
 	{
@@ -248,6 +298,7 @@ class AHPController extends Controller
 
 		return ($hierarchy);
 	}
+	
 
 	public function AHP()
 	{

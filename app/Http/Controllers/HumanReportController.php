@@ -142,6 +142,8 @@ class HumanReportController extends Controller
 
         // dd($results->getCriteria());
 
+        
+
         return view("objetivos.humanReport")
             ->with('results', $results)
             ->with('j_criteria', $j_criteria)

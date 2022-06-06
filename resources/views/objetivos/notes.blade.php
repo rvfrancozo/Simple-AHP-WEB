@@ -67,6 +67,9 @@
 
 <p><i>History</i></p>
 
+<b>2022-06-06:</b> <i>Improvements to the numerial report</i>
+<p>The decision maker has the value of the priority vector of the criteria and the alternatives for each criterion. He also has the values of &lambda; max, consistency index and consistency ratio.</p>
+
 <b>2022-05-29:</b> <i>Group decision with AIP is working</i>
 <p>Now it is possible to make group decision in the scope in AIP. At this point it is not yet possible to define weights for the decision-makers so that everyone has equal importance in the decision.</p>
 

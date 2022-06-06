@@ -58,6 +58,9 @@
                     </th>
 
                     @endforeach
+                    <th scope="col">
+                        <h6 style="color: black"><b>Priority Vector</b></h6>
+                    </th>
 
                 </tr>
             </thead>
@@ -80,7 +83,7 @@
                     </td>
                     <!-- {{$j = -1}} -->
                     @foreach($c as $jc)
-                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$results->getCriteria()[++$j]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>{{round(pow($jc,-1),0)}}</b></a></td>
+                    @if($jc < 1) <td scope="col"><a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: red" title="{{$results->getCriteria()[++$j]['descr']}} is {{round(pow($jc,-1),0)}}x most important/relevant than {{$results->getCriteria()[$i]['descr']}}"><b>1/{{round(pow($jc,-1),0)}}</b></a></td>
                         @elseif($jc > 1)
                         <td scope="col">
                             <a data-toggle="modal" data-target="#excluir_{{$i}}_{{$j+1}}" href="" style="color: blue" title="{{$results->getCriteria()[$i]['descr']}} is {{round($jc,3)}}x most important/relevant than {{$results->getCriteria()[++$j]['descr']}}"><b>{{round($jc,3)}}</b></a>
@@ -90,7 +93,6 @@
                             <a href="" style="color: black" title="{{$results->getCriteria()[++$j]['descr']}} is indifferent than {{$results->getCriteria()[$i]['descr']}}"><b>{{round($jc,3)}}</b></a>
                         </td>
                         @endif
-
                         <div class="modal" id="excluir_{{$i}}_{{$j}}">
                             <div class="modal-dialog">
                                 <div class="modal-content">
@@ -103,7 +105,8 @@
                                         <strong>{{$results->getCriteria()[$i]['descr']}} X {{$results->getCriteria()[$j]['descr']}}</strong>
                                     </div>
                                     <form method="POST" action="/UpdateSingleScore">
-                                        @csrf<!--
+                                        @csrf
+                                        <!--
                                         <select id="newjudment" name="newjudment">
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
@@ -135,14 +138,20 @@
                             </div>
                         </div>
                         @endforeach
+                        <td scope="col">
+                            <h6 style="color: black"><b>{{round($results->getPriority()[$i],3)}}</b></h6>
+                        </td>
                 </tr>@endforeach
             </tbody>
         </table>
         <div align="center"><?php
                             $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getObjectiveId(), 0, null);
                             $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
-                            ?>
-            Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
+                            $ci = App\Http\Controllers\AHPController::GetConsistencyIndex($j_criteria);
+                            $lambda = App\Http\Controllers\AHPController::GetLambdaMax($j_criteria);
+                            ?><i>
+                &lambda; max: {{round($lambda,3)}}, Consistency Index: {{ round($ci,3)}}, Consistency Rate: {{ round( ($consistency_rate), 3 ) }} ({{ round( ($consistency_rate)*100 , 3 ) }}%)
+            </i>
         </div>
 
     </div>
@@ -162,6 +171,10 @@
             <th>
                 <h6 id="{{$results->getCriteria()[$j+1]['id']}}">
                     {{$results->getCriteria()[++$j]['descr']}}
+                    <?php
+                    $c_alternatives = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getCriteria()[$j]['id'], 0, null);
+                    $a_priority = App\Http\Controllers\AHPController::GetPriority($c_alternatives);
+                    ?>
                 </h6>
             </th>
             @foreach($results->getAlternatives() as $x)
@@ -169,6 +182,9 @@
                 <h6 style="color: red"><b>{{$x["descr"]}}</b></h6>
             </th>
             @endforeach
+            <th>
+                <h6 style="color: black"><b>Priority Vector</b></h6>
+            </th>
         </tr>
         @foreach($a as $b)
         <tr align="center">
@@ -178,16 +194,16 @@
             <!-- {{$k = -1}} -->
             @foreach($b as $c)
             @if($c < 1) <td>
-                <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: red" title="In -{{$results->getCriteria()[$j]['descr']}}- {{$results->getAlternatives()[++$k]['descr']}} is {{round(pow($c,-1),0)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
+                <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: red" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[++$k]['descr']}} is {{round(pow($c,-1),0)}}x most important/relevant than {{$results->getAlternatives()[$i]['descr']}}">
                     <b>
                         <!--{{$aa = $i}}-->
-                        {{ round(pow($c,-1),0)}}
+                        1/{{round(pow($c,-1),0)}}
                     </b>
                 </a>
                 </td>
                 @elseif($c > 1)
                 <td>
-                    <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: blue" title="In -{{$results->getCriteria()[$j]['descr']}}- {{$results->getAlternatives()[$i]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[++$k]['descr']}}">
+                    <a data-toggle="modal" data-target="#change_{{$j}}_{{$i}}_{{$k+1}}" href="" style="color: blue" title="In {{$results->getCriteria()[$j]['descr']}} {{$results->getAlternatives()[$i]['descr']}} is {{round($c,2)}}x most important/relevant than {{$results->getAlternatives()[++$k]['descr']}}">
                         <b>
                             {{round($c,2)}}
                         </b>
@@ -253,17 +269,24 @@
 
 
                 @endforeach
+                <td scope="col">
+                    <h6 style="color: black"><b>{{ round($a_priority[$i],3)}}</b></h6>
+                </td>
         </tr>
 
         @endforeach
         <!-- {{$i=-1}} -->
         <tr>
-            <td align="center" colspan="{{$k+2}}">
+            <td align="center" colspan="{{$k+3}}">
                 <?php
                 $j_criteria = App\Http\Controllers\AHPController::GetCriteriaJudmentsMatrix($results->getNodeId()[$j]['id'], 0, null);
                 $consistency_rate = App\Http\Controllers\AHPController::CheckConsistency($j_criteria);
+                $ci = App\Http\Controllers\AHPController::GetConsistencyIndex($j_criteria);
+                $lambda = App\Http\Controllers\AHPController::GetLambdaMax($j_criteria);
                 ?>
-                Inconsistency Rate: {{ round( ($consistency_rate)*100 , 2 ) }}%
+                <i>
+                    &lambda; max: {{round($lambda,3)}}, Consistency Index: {{ round($ci,3)}}, Consistency Rate: {{ round( ($consistency_rate), 3 ) }} ({{ round( ($consistency_rate)*100 , 3 ) }}%)
+                </i>
                 <hr color="black">
             </td>
         </tr>
