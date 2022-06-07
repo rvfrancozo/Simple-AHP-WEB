@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use App\Models\GroupDecision;
 use App\Models\Node;
+use App\Models\User;
 use App\Http\Controllers\AHPController;
 use App\Models\Judments;
 
@@ -16,11 +17,23 @@ class dmController extends Controller
         $j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, null);
         $j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, null);
 
-        if(count($j_criteria) == 0 || count($j_alternatives) == 0) {
+        if (count($j_criteria) == 0 || count($j_alternatives) == 0) {
             return redirect('/error'); //fazer uma view de erro
         }
         $node = Node::get()->where('id', $id)->first();
         $dms = GroupDecision::where('node', $id)->get();
+        $users = array();
+        foreach($dms as $d) {
+            array_push($users, $d->email);
+        }
+
+        $dms = GroupDecision::
+            join('users', 'users.email', '=', 'groupdecision.email')
+            ->where('groupdecision.node', $id)
+            ->select('users.*', 'groupdecision.*')
+            ->get();
+
+        //$dms = User::wherein('email',$users)->get();
         return view("objetivos.dmpanel")->with('id', $node->id)->with('descr', $node->descr)->with('dms', $dms);
     }
 
@@ -101,5 +114,20 @@ class dmController extends Controller
 
         //print_r($data);
         return view("objetivos.dmpanel")->with('dms', $dms)->with('id', $node->id)->with('descr', $node->descr);
+    }
+
+    public function compare($id, $proxy)
+    {
+        $dms = GroupDecision::
+        join('users', 'users.email', '=', 'groupdecision.email')
+        ->where('groupdecision.node', $id)
+        ->select('users.*', 'groupdecision.*')
+        ->get();
+
+        
+
+        foreach($dms as $dm) {
+            echo "<br>".$dm->email;
+        }
     }
 }

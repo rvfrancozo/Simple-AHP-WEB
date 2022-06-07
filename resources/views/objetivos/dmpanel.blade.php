@@ -54,14 +54,58 @@
     <div class="card-header">
         <h5>List of decision-maker for Decision Problem: {{$descr}}</h5>
     </div>
-    <?php
-    $dmsb = App\Models\GroupDecision::where('node', $id)->get();
-    ?>
-    <div class="card-body">
-        @foreach($dmsb as $dm)
-        {{$dm['email']}}
-        <hr>
-        @endforeach
+
+    <div class="card">
+        <div class="card-body">
+            <table class="table">
+                <thead class="thead-light">
+                    <tr>
+                        <th style="width:5%"></th>
+                        <th style="width:75%">Decision-maker</th>
+                        <th>Weight</th>
+                        <th colspan="2" align="center">Actions</th>
+                    </tr>
+                </thead>
+                <tr>
+                    <td>
+                        @if(Auth::user()->avatar == "none")
+                        <img class="rounded-circle" width="25" height="25" src="{{ asset('images/ahp.jpg') }}">
+                        @else
+                        <img class="rounded-circle" width="25" height="25" src="{{ Auth::user()->avatar }}">
+                        @endif
+                    </td>
+                    <td>{{Auth::user()->email}}</td>
+                    <td align="center">1</td>
+                    <td><img width="25" height="25" src="{{ asset('images/decision.png') }}"></td>
+                    <td></td>
+                </tr>
+
+                @foreach($dms as $dm)
+                <tr>
+                    <td>
+                        @if($dm['avatar'] == "none")
+                        <img class="rounded-circle" width="25" height="25" src="{{ asset('images/ahp.jpg') }}">
+                        @else
+                        <img class="rounded-circle" width="25" height="25" src="{{ $dm['avatar'] }}"> 
+                        @endif
+                    </td>
+                    <td>{{$dm['email']}}</td>
+                    <td align="center">
+                        {{round($dm['weight'],2)}}
+                    </td>
+                    <td>
+                        <a href="#" value="Compare the relevance of this decision-maker with the others for this decision problem"><img width="25" height="25" src="{{ asset('images/decision.png') }}"></a>
+                    </td>
+                    <td>
+                        <a href="#" value="Delete this decision-maker and all his judments for this decision problem"><img width="25" height="25" src="{{ asset('images/remove.png') }}"></a>
+                    </td>
+                </tr>
+                @endforeach
+
+            </table>
+        </div>
     </div>
+
+
 </div>
 @stop
