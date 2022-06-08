@@ -106,7 +106,6 @@
                                     </div>
                                     <form method="POST" action="/UpdateSingleScore">
                                         @csrf
-                                        <!--
                                         <select id="newjudment" name="newjudment">
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
@@ -125,7 +124,7 @@
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/7}}">7 {{$results->getCriteria()[$i]['descr']}} is 7x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
-                                        </select>-->
+                                        </select>
                                         <div class="modal-footer">
                                             <div class="btn-group">
                                                 <button type="submit" class="btn btn-primary">Save</button>

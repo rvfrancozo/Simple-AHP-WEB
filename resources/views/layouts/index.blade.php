@@ -24,6 +24,7 @@
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-social.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> -->
     <!-- <link href="{{ asset('css/social.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css"> -->
