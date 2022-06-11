@@ -3,12 +3,16 @@
 namespace App\Http\Controllers;
 
 use App\Models\GroupDecision;
+use Illuminate\Support\Facades\Auth;
 use App\Models\Node;
 use App\Models\User;
 use App\Http\Controllers\AHPController;
+use App\Models\dmModel;
 use App\Models\Judments;
 
 use Illuminate\Http\Request;
+use PHPUnit\TextUI\XmlConfiguration\Group;
+use stdClass;
 
 class dmController extends Controller
 {
@@ -23,18 +27,25 @@ class dmController extends Controller
         $node = Node::get()->where('id', $id)->first();
         $dms = GroupDecision::where('node', $id)->get();
         $users = array();
-        foreach($dms as $d) {
+        foreach ($dms as $d) {
             array_push($users, $d->email);
         }
 
-        $dms = GroupDecision::
-            join('users', 'users.email', '=', 'groupdecision.email')
+        $dms = GroupDecision::leftJoin('users', 'groupdecision.email', '=', 'users.email')
             ->where('groupdecision.node', $id)
-            ->select('users.*', 'groupdecision.*')
+            ->select('groupdecision.id', 'groupdecision.node', 'groupdecision.email', 'groupdecision.weight', 'users.avatar')
             ->get();
+        
+        $gw = GroupDecision::where('node',$id)->sum('weight');
+        if($gw >= 1) $ow = 1;
+        else $ow = 1 - $gw;
 
         //$dms = User::wherein('email',$users)->get();
-        return view("objetivos.dmpanel")->with('id', $node->id)->with('descr', $node->descr)->with('dms', $dms);
+        return view("objetivos.dmpanel")
+            ->with('id', $node->id)
+            ->with('descr', $node->descr)
+            ->with('dms', $dms)
+            ->with('ow',$ow);
     }
 
     public function createDM($id, Request $request)
@@ -53,6 +64,9 @@ class dmController extends Controller
         $dm->node = $id;
         $dm->email = $data['descricao'];
         $dm->save();
+
+        $neweight = 1/(GroupDecision::where('node',$id)->count() + 1);
+        GroupDecision::where('node',$id)->update(['weight' => $neweight]);
 
         //adiciona os julgamentos do novo usuário
 
@@ -112,22 +126,98 @@ class dmController extends Controller
             }
         }
 
-        //print_r($data);
-        return view("objetivos.dmpanel")->with('dms', $dms)->with('id', $node->id)->with('descr', $node->descr);
+        $gw = GroupDecision::where('node',$id)->sum('weight');
+        if($gw >= 1) $ow = 1;
+        else $ow = 1 - $gw;
+
+        // return view("objetivos.dmpanel")
+        //     ->with('dms', $dms)
+        //     ->with('id', $node->id)
+        //     ->with('descr', $node->descr)
+        //     ->with('ow',$ow);
+        return redirect('group/'.$id.'/dm');
     }
 
     public function compare($id, $proxy)
     {
-        $dms = GroupDecision::
-        join('users', 'users.email', '=', 'groupdecision.email')
-        ->where('groupdecision.node', $id)
-        ->select('users.*', 'groupdecision.*')
-        ->get();
+        $results = new dmModel();
+
+        $goal = Node::select('id', 'descr')->where('id', $id)->get()->first();
+
+        $userproxy = GroupDecision::select('id', 'node', 'email')
+            ->where('id', $proxy)->get()->first();
+
+        $dms = GroupDecision::leftJoin('users', 'users.email', '=', 'groupdecision.email')
+            ->where('groupdecision.node', $id)
+            ->where('groupdecision.email', '<>', $userproxy->email)
+            ->select('users.avatar', 'groupdecision.*')
+            ->get();
+
+        return view("objetivos.dmcomparisons")
+            ->with('dms', $dms)
+            ->with('goal', $goal)
+            ->with('proxy', $userproxy);
+    }
+
+    public function dmweights($id, Request $request)
+    {
+        $data = $request->all();
+        //dd($data);
+        $nodes = array();
+        $score = array(array());
+
+        for ($i = 0; $i < $data['counter']; $i++) {
+            $s = explode(";", $data['score' . $i]);
+            // array_push($nodes, $s[1]);
+            array_push($nodes, $s[2]);
+            $score[$s[1]][$s[2]] = $s[3];
+            $score[$s[2]][$s[1]] = 1 / $s[3];
+            //echo "<br>" . $data['score' . $i];
+            // echo "<br>" . $s[1] . " X " . $s[2] . " = " . $s[3];
+            // echo "<br>" . $s[2] . " X " . $s[1] . " = " . 1 / $s[3];
+        }
 
         
-
-        foreach($dms as $dm) {
-            echo "<br>".$dm->email;
+        for ($i = 0; $i < count($nodes); $i++) {
+            for ($j = $i + 1; $j < count($nodes); $j++) {
+                $score[$nodes[$i]][$nodes[$j]] = 1 / ($score[$s[1]][$nodes[$i]] / $score[$s[1]][$nodes[$j]]);
+                $score[$nodes[$j]][$nodes[$i]] = ($score[$s[1]][$nodes[$i]] / $score[$s[1]][$nodes[$j]]);
+                // echo "<br>" . $nodes[$i] . " X " . $nodes[$j] . " = " . 1 / ($score[$s[1]][$nodes[$i]] / $score[$s[1]][$nodes[$j]]);
+                // echo "<br>" . $nodes[$j] . " X " . $nodes[$i] . " = " . ($score[$s[1]][$nodes[$i]] / $score[$s[1]][$nodes[$j]]);
+            }
         }
+        //Monta a matriz de julgamentos
+        // echo "<hr>";
+        array_push($nodes, $s[1]);
+        // print_r($nodes);
+        sort($nodes);
+        // print_r($nodes);
+        // print_r($nodes);
+        // echo "<br>";
+        $dmjudment = array(array());
+        // echo "<table border='10'>";
+        for ($i = 0; $i < count($nodes); $i++) {
+            // echo "<tr>";
+            for ($j = 0; $j < count($nodes); $j++) {
+                if ($i == $j) {
+                    // echo "<td>1</td>";
+                    $score[$i][$j] = 1;
+                    $dmjudment[$i][$j] = 1;
+                } else {
+                    $dmjudment[$i][$j] = $score[$nodes[$i]][$nodes[$j]];
+                    // echo "<td>". $score[$nodes[$i]][$nodes[$j]]."</td>";
+                }
+            }
+            // echo "</td>";
+        }
+        // echo "</table>";
+        $p = AHPController::GetPriority($dmjudment);
+        // print_r($p);
+        // echo "<br>";
+        // print_r($nodes);
+        for($i = 1; $i < count($p); $i++) {
+            GroupDecision::where('id',$nodes[$i])->update(['weight' => $p[$i]]);
+        }
+        return redirect('/group/'.$id.'/dm');
     }
 }

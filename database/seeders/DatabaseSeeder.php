@@ -27,9 +27,9 @@ class DatabaseSeeder extends Seeder
 
 		//Group
 		DB::table('groupdecision')->insert([
-			['node' => 1, 'email' => 'rvfrancozo@gmail.com'],
-			['node' => 1, 'email' => 'rafael.francozo@ifms.edu.br'],
-			['node' => 7, 'email' => 'rafael.francozo@ifms.edu.br'],
+			['node' => 1, 'email' => 'rvfrancozo@gmail.com', 'weight' => 1/3],
+			['node' => 1, 'email' => 'rafael.francozo@ifms.edu.br', 'weight' => 1/3],
+			['node' => 7, 'email' => 'rafael.francozo@ifms.edu.br', 'weight' => 0.5],
 		]);
 
 		//Populate Sample

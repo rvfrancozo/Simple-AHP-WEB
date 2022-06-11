@@ -75,15 +75,15 @@
                         @endif
                     </td>
                     <td>{{Auth::user()->email}}</td>
-                    <td align="center">1</td>
-                    <td><img width="25" height="25" src="{{ asset('images/decision.png') }}"></td>
-                    <td></td>
+                    <td align="center">{{round($ow,3)}}</td>
+                    <td>-</td>
+                    <td>-</td>
                 </tr>
 
                 @foreach($dms as $dm)
                 <tr>
                     <td>
-                        @if($dm['avatar'] == "none")
+                        @if($dm['avatar'] == null || $dm['avatar'] == "none")
                         <img class="rounded-circle" width="25" height="25" src="{{ asset('images/ahp.jpg') }}">
                         @else
                         <img class="rounded-circle" width="25" height="25" src="{{ $dm['avatar'] }}"> 
@@ -91,10 +91,10 @@
                     </td>
                     <td>{{$dm['email']}}</td>
                     <td align="center">
-                        {{round($dm['weight'],2)}}
+                        {{round($dm['weight'],3)}}
                     </td>
                     <td>
-                        <a href="#" value="Compare the relevance of this decision-maker with the others for this decision problem"><img width="25" height="25" src="{{ asset('images/decision.png') }}"></a>
+                        <a href="/dmcompare/{{$id}}/{{$dm['id']}}" value="Compare the relevance of this decision-maker with the others for this decision problem"><img width="25" height="25" src="{{ asset('images/decision.png') }}"></a>
                     </td>
                     <td>
                         <a href="#" value="Delete this decision-maker and all his judments for this decision problem"><img width="25" height="25" src="{{ asset('images/remove.png') }}"></a>

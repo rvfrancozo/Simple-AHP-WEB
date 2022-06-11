@@ -63,6 +63,7 @@ Route::get('/nodes/{id}/HumanReport', [HumanReportController::class, 'report']);
 Route::get('/notes', [NotesController::class, 'notes']);
 Route::get('/group/{id}/dm', [dmController::class, 'dm']);
 Route::post('/createDM/{id}', [dmController::class, 'createDM']);
+Route::post('/dmweights/{id}', [dmController::class, 'dmweights']);
 Route::get('/dmcompare/{id}/{proxy}', [dmController::class, 'compare']);
 
 Route::get('/allusers', [viewusers::class, 'view']);
