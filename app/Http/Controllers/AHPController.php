@@ -60,7 +60,25 @@ class AHPController extends Controller
 		//SELECT distinct(user_email) FROM judments WHERE id_node = 1 and judments.user_email NOT IN (SELECT email from groupdecision where node = 1);
 		$mailowner = Judments::select('user_email')->where('id_node', $id)->whereNotIn('user_email', GroupDecision::select('email')->where('node', $id)->get())->get()->first();
 		//echo $mailowner->user_email;
-		$users = Judments::where('id_node', $id)->where('user_email', '<>', $mailowner->user_email)->select('user_email')->distinct()->get();
+
+		/*
+		select distinct(judments.user_email), groupdecision.weight from judments join groupdecision on judments.user_email = groupdecision.email  where judments.id_node = 1 and groupdecision.node =1 and judments.user_email <> 'admin@admin';
+		*/
+		// $users = Judments::leftjoin('groupdecision', 'judments.user_email', '=', 'groupdecision.email')
+		// ->select('judments.user_email')
+		// ->select('groupdecision.weight')
+		// ->where('user_email', '<>', $mailowner->user_email)
+		// ->where('id_node', $id)->distinct()->get();
+
+		// $users = GroupDecision::leftJoin('users', 'groupdecision.email', '=', 'users.email')
+		// 	->where('groupdecision.node', $id)
+		// 	->select('groupdecision.id', 'groupdecision.node', 'groupdecision.email', 'groupdecision.weight', 'users.avatar')
+		// 	->get();
+		$users = GroupDecision::where('node',$id)->select('email','weight')->get();
+
+		//dd($users);
+
+		//$users = Judments::where('id_node', $id)->where('user_email', '<>', $mailowner->user_email)->select('user_email')->distinct()->get();
 		$nusers = count($users);
 
 		$group = array();
@@ -80,16 +98,18 @@ class AHPController extends Controller
 		array_push($group, $userpriority);
 
 
-
+		//echo "<br>" . $mailowner->user_email . ": " . $w;
 		foreach ($users as $user) {
-			$j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, $user->user_email);
-			$w = GroupDecision::where('email', $user->user_email)->where('node', $id)->select('weight')->get()->first();
-			//echo ($w->weight);
+			$j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, $user->email);
+			//echo "<br>" . $user->email . ": " . $user->weight." = ";
 			//echo "<hr><b>Criteria priorities for:</b>" . $user->user_email . "<br>";
 			$userpriority = AHPController::GetPriority($j_criteria);
+			//print_r($j_criteria);
 			for ($i = 0; $i < count($userpriority); $i++) {
-				$userpriority[$i] = $userpriority[$i] * $w->weight;
+				$userpriority[$i] = $userpriority[$i] * $user->weight;
 			}
+			
+			//echo "<BR>";
 			array_push($group, $userpriority);
 
 			//print_r(AHPController::GetPriority($j_criteria));
@@ -97,6 +117,8 @@ class AHPController extends Controller
 		$dim = count($j_criteria);
 		$gpriority = array();
 		$b = true;
+
+		//print_r($group);
 
 		foreach ($group as $g) {
 			for ($i = 0; $i < count($g); $i++) {
@@ -215,7 +237,8 @@ class AHPController extends Controller
 	{
 		$mailowner = Judments::select('user_email')->where('id_node', $id)->whereNotIn('user_email', GroupDecision::select('email')->where('node', $id)->get())->get()->first();
 
-		$users = Judments::where('id_node', $id)->where('user_email', '<>', $mailowner->user_email)->select('user_email')->distinct()->get();
+		//$users = Judments::where('id_node', $id)->where('user_email', '<>', $mailowner->user_email)->select('user_email')->distinct()->get();
+		$users = GroupDecision::where('node',$id)->select('email','weight')->get();
 
 		$nusers = count($users);
 
@@ -232,14 +255,14 @@ class AHPController extends Controller
 		array_push($group, $userpriority);
 
 		foreach ($users as $user) {
-			$j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, $user->user_email);
-			$j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, $user->user_email);
+			$j_criteria = AHPController::GetCriteriaJudmentsMatrix($id, 0, $user->email);
+			$j_alternatives = AHPController::GetAlternativesJudmentsMatrix($id, 0, $user->email);
 			//echo "<hr><b>Criteria priorities for:</b>" . $user->user_email . "<br>";
 			//array_push($group, AHPController::FinalPriority($j_criteria, $j_alternatives));
 			//print_r(AHPController::GetPriority($j_criteria));
 			$userpriority = AHPController::FinalPriority($j_criteria, $j_alternatives);
 			for ($i = 0; $i < count($userpriority); $i++) {
-				$userpriority[$i] = $userpriority[$i] * $w;
+				$userpriority[$i] = $userpriority[$i] * $user->weight;
 			}
 			array_push($group, $userpriority);
 		}
@@ -280,6 +303,7 @@ class AHPController extends Controller
 		//$judments = Judments::orderBy('id', 'DESC')->get()->where('id_node', 1)->where('id_node1', 2);
 		if (is_null($user)) {
 			$user = Auth::user()->email;
+			
 		}
 		$query = Judments::orderBy('id_node1', 'ASC')
 			->orderBy('id_node2', 'ASC')
