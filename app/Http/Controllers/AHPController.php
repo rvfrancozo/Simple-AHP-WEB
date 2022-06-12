@@ -303,7 +303,6 @@ class AHPController extends Controller
 		//$judments = Judments::orderBy('id', 'DESC')->get()->where('id_node', 1)->where('id_node1', 2);
 		if (is_null($user)) {
 			$user = Auth::user()->email;
-			
 		}
 		$query = Judments::orderBy('id_node1', 'ASC')
 			->orderBy('id_node2', 'ASC')
