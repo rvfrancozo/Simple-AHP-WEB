@@ -72,8 +72,15 @@ class NodesController extends Controller
             ->distinct()
             ->get();
 
-        $objective = Node::get()->where('id', $id);
-        $goal = $objective[$id - 1];
+        $objective = Node::select('id','descr')->where('id', $id)->get()->first();
+
+        $goal = $objective;
+
+       //dd($objective);
+
+        
+        //$goal = $objective[$id - 1];
+        //$goal = $objective->descr;
 
         return view("objetivos.alternatives")->with('alternatives', $alternatives)->with('goal', $goal);
     }
