@@ -67,6 +67,9 @@
 
 <p><i>History</i></p>
 
+<b>2022-06-27:</b> <i>Improvements to the Group decision</i>
+<p>Now it is possible to assign weights (or scaling constant) to the decision makers. The comparison between decision makers is performed in the same way as the comparison between criteria and alternatives using the Saaty scale.</p>
+
 <b>2022-06-06:</b> <i>Improvements to the numerial report</i>
 <p>The decision maker has the value of the priority vector of the criteria and the alternatives for each criterion. He also has the values of &lambda; max, consistency index and consistency ratio.</p>
 
