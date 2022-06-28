@@ -110,7 +110,7 @@ The most relevant Alternative for the decision problem {{ $results->getObjective
 </div>
 
 <hr>
-The -- most relevant Criterion for the decision problem {{ $results->getObjective() }} is: <b>{{$results->getBestCriteria()}} </b> with {{round($results->getBestCriteriaPriority()*100,2)}}% of priority.
+The most relevant Criterion for the decision problem {{ $results->getObjective() }} is: <b>{{$results->getBestCriteria()}} </b> with {{round($results->getBestCriteriaPriority()*100,2)}}% of priority.
 	
 <hr>	
 <div class="container">
