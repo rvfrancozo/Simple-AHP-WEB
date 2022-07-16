@@ -12,7 +12,9 @@
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
+    <script src="{{ asset('js/slider.js') }}" defer></script>
     <script src="/js/jquery.min.js"></script>
+    <script src="/js/slider.js"></script>
     <script src="/js/bootstrap.bundle.min.js"></script>
     <script src="/js/chart.js"></script>
     <script src='https://kit.fontawesome.com/a076d05399.js' crossorigin='anonymous'></script>
@@ -25,6 +27,7 @@
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
     <link href="{{ asset('css/bootstrap-social.css') }}" rel="stylesheet">
     <link href="{{ asset('css/font-awesome.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/slider.css') }}" rel="stylesheet">
     <!-- <link href="{{ asset('css/bootstrap.min.css') }}" rel="stylesheet"> -->
     <!-- <link href="{{ asset('css/social.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css"> -->

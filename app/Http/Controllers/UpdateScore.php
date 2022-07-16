@@ -21,8 +21,17 @@ class UpdateScore extends Controller
         $up = array();
         $scores = array();
 
+        //dd($data);
+
         for ($i = 0; $i < $data['counter']; $i++) {
             $s = explode(";", $data['score' . $i]);
+            $v = $data['value' . $i];
+            if($v < 0)
+                $v = 1 / ($v * (-1));
+            if($v == 0)
+                $v = 1;
+            array_push($s,$v);
+
             if ($s[1] != $proxy) array_push($n, $s[1]);
             if ($s[2] != $proxy) array_push($n, $s[2]);
             array_push($up, $s[0]);
