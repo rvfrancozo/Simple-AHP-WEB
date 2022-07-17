@@ -63,11 +63,8 @@ $score = array(1 / 9, 1 / 8, 1 / 7, 1 / 6, 1 / 5, 1 / 4, 1 / 3, 1 / 2);
                                 output{{$i}}.innerHTML = '{{ $c->descr }} is ' + this.value * (-1) + 'x preferable to {{$target[0]->descr}}';
                             else if (this.value > 1)
                                 output{{$i}}.innerHTML = '{{$target[0]->descr}} is ' + this.value + 'x preferable to {{ $c->descr }}';
-                            else if (this.value == 1)
+                            else if (this.value == 0 || this.value == 1)
                                 output{{$i}}.innerHTML = '{{$target[0]->descr}} is indifferent to {{ $c->descr }}';
-                            else if (this.value == 0)
-                                output{{$i}}.innerHTML = 'Invalid judment';
-                            
                         }
                     </script>
 

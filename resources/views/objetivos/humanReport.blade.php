@@ -97,15 +97,35 @@
                             <div class="modal-dialog">
                                 <div class="modal-content">
                                     <div class="modal-header">
-                                        <h4 class="modal-title">Update Judment #{{$i}} _{{$j}}</h4>
+                                        <h4 class="modal-title">Update Judment</h4>
                                         <!--<button type="button" class="close" data-dismiss="modal"></button>-->
                                     </div>
                                     <div class="modal-body">
                                         Update comparison between:
                                         <strong>{{$results->getCriteria()[$i]['descr']}} X {{$results->getCriteria()[$j]['descr']}}</strong>
+                                        <br><span id="show{{$i}}{{$j}}"></span>
                                     </div>
                                     <form method="POST" action="/UpdateSingleScore">
                                         @csrf
+                                        <input type="hidden" name="newjudment" value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}}">
+                                <div align="center" class="slidecontainer">
+                                    <input type="range" min="-9" max="9" value="0" step="1" class="slider" name="newscore" id="newjudment{{$i}}{{$j}}">
+                                </div> 
+                                <script type="text/javascript">
+                                    var slider{{$i}}{{$j}} = document.getElementById("newjudment{{$i}}{{$j}}");
+                                    var output{{$i}}{{$j}} = document.getElementById("show{{$i}}{{$j}}");
+                                    output{{$i}}{{$j}}.innerHTML = slider{{$i}}{{$j}}.value;
+
+                                    slider{{$i}}{{$j}}.oninput = function() {
+                                        if(this.value < 0)
+                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$i]['descr']}} is ' + this.value * (-1) + 'x preferable than {{$results->getCriteria()[$j]['descr']}}';
+                                        else if (this.value > 1)
+                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$j]['descr']}} is ' + this.value + 'x preferable than {{$results->getCriteria()[$i]['descr']}}';
+                                        else if (this.value == 0 || this.value == 1)
+                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$i]['descr']}} is indifferent to {{$results->getCriteria()[$j]['descr']}}';
+                                    }
+                                </script>
+                                        <!--
                                         <select id="newjudment" name="newjudment">
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{9}}">1/9 {{$results->getCriteria()[$j]['descr']}} is 9x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{8}}">1/8 {{$results->getCriteria()[$j]['descr']}} is 8x preferable than {{$results->getCriteria()[$i]['descr']}}</option>
@@ -125,6 +145,7 @@
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/8}}">8 {{$results->getCriteria()[$i]['descr']}} is 8x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                             <option value="{{$results->getObjectiveId()}};{{$results->getObjectiveId()}};{{$results->getNodeId()[$i]['id']}};{{$results->getNodeId()[$j]['id']}};{{1/9}}">9 {{$results->getCriteria()[$i]['descr']}} is 9x preferable than {{$results->getCriteria()[$j]['descr']}}</option>
                                         </select>
+    -->
                                         <div class="modal-footer">
                                             <div class="btn-group">
                                                 <button type="submit" class="btn btn-primary">Save</button>
@@ -223,16 +244,35 @@
                     <div class="modal-dialog">
                         <div class="modal-content">
                             <div class="modal-header">
-                                <h4 class="modal-title">Update Judment #{{$i}} _{{$j}}</h4>
+                                <h4 class="modal-title">Update Judment</h4>
                                 <!--<button type="button" class="close" data-dismiss="modal"></button>-->
                             </div>
                             <div class="modal-body">
                                 Update comparison in <i>{{$results->getCriteria()[$j]['descr']}}</i> between:
                                 <strong>{{$results->getAlternatives()[$i]['descr']}} X {{$results->getAlternatives()[$k]['descr']}}</strong>
+                                <br><span id="show{{$j}}{{$i}}{{$k}}"></span>
                             </div>
                             <form method="POST" action="/UpdateSingleScore">
                                 @csrf
-                                <!-- AQUI TEM ERRO -->
+                                <input type="hidden" name="newjudment" value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}}">
+                                <div align="center" class="slidecontainer">
+                                    <input type="range" min="-9" max="9" value="0" step="1" class="slider" name="newscore" id="newjudment{{$j}}{{$i}}{{$k}}">
+                                </div> 
+                                <script type="text/javascript">
+                                    var slider{{$j}}{{$i}}{{$k}} = document.getElementById("newjudment{{$j}}{{$i}}{{$k}}");
+                                    var output{{$j}}{{$i}}{{$k}} = document.getElementById("show{{$j}}{{$i}}{{$k}}");
+                                    output{{$j}}{{$i}}{{$k}}.innerHTML = slider{{$j}}{{$i}}{{$k}}.value;
+
+                                    slider{{$j}}{{$i}}{{$k}}.oninput = function() {
+                                        if(this.value > 1)
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$k]['descr']}} is ' + this.value + 'x preferable than {{$results->getAlternatives()[$i]['descr']}}';
+                                        else if (this.value < 0)
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$i]['descr']}} is ' + this.value * (-1) + 'x preferable than {{$results->getAlternatives()[$k]['descr']}}';
+                                        else if (this.value == 0 || this.value == 1)
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$k]['descr']}} is indifferent to {{$results->getAlternatives()[$i]['descr']}}';
+                                    }
+                                </script>
+                                <!-- 
                                 <select id="newjudment" name="newjudment">
                                     <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{9}}">1/9 {{$results->getAlternatives()[$k]['descr']}} is 9x preferable than {{$results->getAlternatives()[$i]['descr']}}</option>
                                     <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{8}}">1/8 {{$results->getAlternatives()[$k]['descr']}} is 8x preferable than {{$results->getAlternatives()[$i]['descr']}}</option>
@@ -252,6 +292,7 @@
                                     <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/8}}">8 {{$results->getAlternatives()[$i]['descr']}} is 8x preferable than {{$results->getAlternatives()[$k]['descr']}}</option>
                                     <option value="{{$results->getObjectiveId()}};{{$results->getCriteria()[$j]['id']}};{{$results->getAlternatives()[$i]['id']}};{{$results->getAlternatives()[$k]['id']}};{{1/9}}">9 {{$results->getAlternatives()[$i]['descr']}} is 9x preferable than {{$results->getAlternatives()[$k]['descr']}}</option>
                                 </select>
+    -->
                                 <div class="modal-footer">
                                     <div class="btn-group">
                                         <button type="submit" class="btn btn-primary">Save</button>
