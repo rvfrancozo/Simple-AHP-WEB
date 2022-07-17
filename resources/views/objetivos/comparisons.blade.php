@@ -56,15 +56,15 @@ $score = array(1 / 9, 1 / 8, 1 / 7, 1 / 6, 1 / 5, 1 / 4, 1 / 3, 1 / 2);
                     <script type="text/javascript">
                         var slider{{$i}} = document.getElementById("slider{{$i}}");
                         var output{{$i}} = document.getElementById("show{{$i}}");
-                        output{{$i}}.innerHTML = '{{$target[0]->descr}} x {{ $c->descr }}';
+                        output{{$i}}.innerHTML = '<span style="color: #00f;">{{$target[0]->descr}}</span> x <span style="color: #f00;">{{ $c->descr }}</span>';
 
                         slider{{$i}}.oninput = function() {
-                            if(this.value < 0)
-                                output{{$i}}.innerHTML = '{{ $c->descr }} is ' + this.value * (-1) + 'x preferable to {{$target[0]->descr}}';
+                            if(this.value < -1)
+                                output{{$i}}.innerHTML = '<span style="color: #f00;font-style: italic;">{{ $c->descr }}</span> is ' + this.value * (-1) + 'x preferable to <span style="color: #00f;font-style: italic;">{{$target[0]->descr}}</span>';
                             else if (this.value > 1)
-                                output{{$i}}.innerHTML = '{{$target[0]->descr}} is ' + this.value + 'x preferable to {{ $c->descr }}';
-                            else if (this.value == 0 || this.value == 1)
-                                output{{$i}}.innerHTML = '{{$target[0]->descr}} is indifferent to {{ $c->descr }}';
+                                output{{$i}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$target[0]->descr}}</span> is ' + this.value + 'x preferable to <span style="color: #f00;font-style: italic;">{{ $c->descr }}</span>';
+                            else if (this.value == -1 || this.value == 0 || this.value == 1)
+                                output{{$i}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$target[0]->descr}}</span> is indifferent to <span style="color: #f00;font-style: italic;">{{ $c->descr }}</span>';
                         }
                     </script>
 

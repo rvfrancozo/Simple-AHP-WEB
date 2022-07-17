@@ -114,15 +114,15 @@
                                 <script type="text/javascript">
                                     var slider{{$i}}{{$j}} = document.getElementById("newjudment{{$i}}{{$j}}");
                                     var output{{$i}}{{$j}} = document.getElementById("show{{$i}}{{$j}}");
-                                    output{{$i}}{{$j}}.innerHTML = slider{{$i}}{{$j}}.value;
+                                    output{{$i}}{{$j}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getCriteria()[$i]['descr']}}</span> is indifferent to <span style="color: #f00;font-style: italic;">{{$results->getCriteria()[$j]['descr']}}</span>';
 
                                     slider{{$i}}{{$j}}.oninput = function() {
-                                        if(this.value < 0)
-                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$i]['descr']}} is ' + this.value * (-1) + 'x preferable than {{$results->getCriteria()[$j]['descr']}}';
+                                        if(this.value < -1)
+                                            output{{$i}}{{$j}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getCriteria()[$i]['descr']}}</span> is ' + this.value * (-1) + 'x preferable than <span style="color: #f00;font-style: italic;">{{$results->getCriteria()[$j]['descr']}}</span>';
                                         else if (this.value > 1)
-                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$j]['descr']}} is ' + this.value + 'x preferable than {{$results->getCriteria()[$i]['descr']}}';
-                                        else if (this.value == 0 || this.value == 1)
-                                            output{{$i}}{{$j}}.innerHTML = '{{$results->getCriteria()[$i]['descr']}} is indifferent to {{$results->getCriteria()[$j]['descr']}}';
+                                            output{{$i}}{{$j}}.innerHTML = '<span style="color: #f00;font-style: italic;">{{$results->getCriteria()[$j]['descr']}}</span> is ' + this.value + 'x preferable than <span style="color: #00f;font-style: italic;">{{$results->getCriteria()[$i]['descr']}}</span>';
+                                            else if (this.value == -1 || this.value == 0 || this.value == 1)
+                                            output{{$i}}{{$j}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getCriteria()[$i]['descr']}}</span> is indifferent to <span style="color: #f00;font-style: italic;">{{$results->getCriteria()[$j]['descr']}}</span>';
                                     }
                                 </script>
                                         <!--
@@ -261,15 +261,15 @@
                                 <script type="text/javascript">
                                     var slider{{$j}}{{$i}}{{$k}} = document.getElementById("newjudment{{$j}}{{$i}}{{$k}}");
                                     var output{{$j}}{{$i}}{{$k}} = document.getElementById("show{{$j}}{{$i}}{{$k}}");
-                                    output{{$j}}{{$i}}{{$k}}.innerHTML = slider{{$j}}{{$i}}{{$k}}.value;
+                                    output{{$j}}{{$i}}{{$k}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getAlternatives()[$i]['descr']}}</span> is indifferent to <span style="color: #f00;font-style: italic;">{{$results->getAlternatives()[$k]['descr']}}</span>';
 
                                     slider{{$j}}{{$i}}{{$k}}.oninput = function() {
                                         if(this.value > 1)
-                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$k]['descr']}} is ' + this.value + 'x preferable than {{$results->getAlternatives()[$i]['descr']}}';
-                                        else if (this.value < 0)
-                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$i]['descr']}} is ' + this.value * (-1) + 'x preferable than {{$results->getAlternatives()[$k]['descr']}}';
-                                        else if (this.value == 0 || this.value == 1)
-                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '{{$results->getAlternatives()[$k]['descr']}} is indifferent to {{$results->getAlternatives()[$i]['descr']}}';
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '<span style="color: #f00;font-style: italic;">{{$results->getAlternatives()[$k]['descr']}}</span> is ' + this.value + 'x preferable than <span style="color: #00f;font-style: italic;">{{$results->getAlternatives()[$i]['descr']}}</span>';
+                                        else if (this.value < -1)
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getAlternatives()[$i]['descr']}}</span> is ' + this.value * (-1) + 'x preferable than <span style="color: #f00;font-style: italic;">{{$results->getAlternatives()[$k]['descr']}}</span>';
+                                        else if (this.value == -1 || this.value == 0 || this.value == 1)
+                                            output{{$j}}{{$i}}{{$k}}.innerHTML = '<span style="color: #00f;font-style: italic;">{{$results->getAlternatives()[$i]['descr']}}</span> is indifferent to <span style="color: #f00;font-style: italic;">{{$results->getAlternatives()[$k]['descr']}}</span>';
                                     }
                                 </script>
                                 <!-- 
