@@ -33,19 +33,30 @@
     <!-- <link href="{{ asset('css/social-icons.css') }}" rel="stylesheet" type="text/css"> -->
     <!-- <link rel="stylesheet" href="/css/bootstrap.min.css"> -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
-
+    <style>
+        .slider {
+            -webkit-appearance: none;
+            width: 80%;
+            height: 5px;
+            background: #d3d3d3;
+            outline: none;
+            opacity: 0.7;
+            -webkit-transition: .2s;
+            transition: opacity .2s;
+        }
+    </style>
     <!-- Estilo para o Tamanho do Gráfico -->
-    <style> 
-    .chart-wrapper {
-   
-      height: 300px;
-      width: 600px;
-    }
+    <style>
+        .chart-wrapper {
 
-    p {
-      margin-top: 15px;
-    }
-  </style>
+            height: 300px;
+            width: 600px;
+        }
+
+        p {
+            margin-top: 15px;
+        }
+    </style>
 </head>
 
 <body>
@@ -60,12 +71,12 @@
             <!-- Right Side Of Navbar -->
 
             <ul class="navbar-nav ms-auto">
-            <li>
-		<form method="GET" action="/notes">
-			@csrf
-			<button style="border:none;background-color:transparent" type="submit" class="nav-link">About...</button>
-		</form>
-	</li>
+                <li>
+                    <form method="GET" action="/notes">
+                        @csrf
+                        <button style="border:none;background-color:transparent" type="submit" class="nav-link">About...</button>
+                    </form>
+                </li>
                 <!-- Authentication Links -->
                 @guest
                 @if (Route::has('login'))
