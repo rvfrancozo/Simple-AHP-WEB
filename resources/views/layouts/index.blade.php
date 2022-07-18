@@ -52,7 +52,7 @@
             height: 300px;
             width: 600px;
         }
-        @media screen and (max-width: 600px) {
+        @media screen and (max-width: 399px) {
             .chart-wrapper {
 
                 height: 50%;
