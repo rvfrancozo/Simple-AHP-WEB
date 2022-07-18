@@ -52,6 +52,13 @@
             height: 300px;
             width: 600px;
         }
+        @media screen and (max-width: 600px) {
+            .chart-wrapper {
+
+                height: 50%;
+                width: 100%;
+            }
+        }
 
         p {
             margin-top: 15px;
