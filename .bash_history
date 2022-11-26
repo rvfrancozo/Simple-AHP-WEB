@@ -163,3 +163,9 @@ git rebase --abort
 git pull origin master
 git status
 git push origin main
+git remote -v
+git add .
+git commit -m "update"
+ls
+git push origin master
+exit
