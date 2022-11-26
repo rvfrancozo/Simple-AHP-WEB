@@ -67,7 +67,7 @@
 
 <p><i>History</i></p>
 
-<b>2022-11-26:</b> <i>Manual register is avaliable</i>
+<b>2022-11-26:</b> <i>Manual register is avaliable!</i>
 <p>Now it is possible to create a user without social login.</p>
 
 <b>2022-06-27:</b> <i>Improvements to the Group decision</i>
