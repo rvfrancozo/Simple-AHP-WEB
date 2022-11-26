@@ -1,0 +1,41 @@
+# Este arquivo viminfo foi gerado pelo Vim 8.2.
+# Você pode editá-lo se for cuidadoso!
+
+# Viminfo version
+|1,4
+
+# Valor de 'encoding' quando este arquivo foi escrito
+*encoding=utf-8
+
+
+# hlsearch on (H) or off (h):
+~h
+# Histórico de linha de comando (mais recente primeiro):
+:q
+|2,0,1654120158,,"q"
+
+# Histórico de expressões de busca (mais recente primeiro):
+
+# Histórico de expressões (mais recente primeiro):
+
+# Histórico de linha de entrada (mais recente primeiro):
+
+# Histórico de linha de debug (mais recente primeiro):
+
+# Registradores:
+
+# Marcas nos arquivos:
+'0  48  0  ~/.git/COMMIT_EDITMSG
+|4,48,48,0,1654120158,"~/.git/COMMIT_EDITMSG"
+
+# Lista de saltos (mais recente primeiro):
+-'  48  0  ~/.git/COMMIT_EDITMSG
+|4,39,48,0,1654120158,"~/.git/COMMIT_EDITMSG"
+-'  1  0  ~/.git/COMMIT_EDITMSG
+|4,39,1,0,1654120119,"~/.git/COMMIT_EDITMSG"
+
+# Histórico de marcas nos arquivos (mais recente primeiro):
+
+> ~/.git/COMMIT_EDITMSG
+	*	1654120157	0
+	"	48	0

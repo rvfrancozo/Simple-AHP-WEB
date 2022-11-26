@@ -92,7 +92,7 @@
                         </div>
                         <hr>
                     </form>
-                    Are you not a member?  <!--a href="{{ route('register') }}">Register</a> or --> Use your social login:
+                    Are you not a member?  <a href="{{ route('register') }}">Register</a> or Use your social login:
                     
                 </div>
 

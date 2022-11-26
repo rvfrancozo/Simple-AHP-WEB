@@ -78,9 +78,6 @@
 
 <b>2022-05-29:</b> <i>Group decision with AIP is working</i>
 <p>Now it is possible to make group decision in the scope in AIP. At this point it is not yet possible to define weights for the decision-makers so that everyone has equal importance in the decision.</p>
-<ul>
-<li><a href="https://doi.org/10.1016/S0377-2217(97)00244-0" target="_blank">FORMAN, Ernest.; PENIWATI, Kirti. Aggregating individual judgments and priorities with the analytic hierarchy process. <b>European Journal of Operational Research</b>, v. 108, n. 1, p. 165-169, 1998.</a></li>
-</ul>
 
 <b>2022-05-23:</b> <i>revision of the alternatives judgments released</i>
 <p>Now, in Human report, the decision maker can adjust the alternatives judgments as he wishes.</p>
